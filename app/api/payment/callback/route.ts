@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
         const order = await ServerOrderService.getOrderByOrderId(order_id);
         if (order) {
           await ServerOrderService.updateOrderPaymentStatus(order.id!, {
-            status: "paid",
+            status: "success",
             transactionId: refno,
             billCode: billcode,
             notes: `Payment completed at ${transaction_time}. Amount: ${amount}`,

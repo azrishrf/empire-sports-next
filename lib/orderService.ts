@@ -33,8 +33,8 @@ export interface Order {
   shippingFee: number;
   discount: number;
   totalAmount: number;
-  status: "pending" | "paid" | "failed" | "cancelled" | "processing" | "shipped" | "delivered";
-  paymentStatus: "pending" | "paid" | "failed";
+  status: "pending" | "success" | "failed" | "cancelled" | "processing" | "shipped" | "delivered";
+  paymentStatus: "pending" | "success" | "failed";
   billCode?: string;
   transactionId?: string;
   paymentUrl?: string;
@@ -161,7 +161,7 @@ export class OrderService {
   static async updateOrderPaymentStatus(
     orderId: string,
     paymentData: {
-      status: "paid" | "failed";
+      status: "success" | "failed";
       transactionId?: string;
       billCode?: string;
       notes?: string;
@@ -170,7 +170,7 @@ export class OrderService {
     try {
       const updates: Partial<Order> = {
         paymentStatus: paymentData.status,
-        status: paymentData.status === "paid" ? "processing" : "failed",
+        status: paymentData.status === "success" ? "processing" : "failed",
         updatedAt: Timestamp.now(),
       };
 

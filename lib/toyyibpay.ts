@@ -194,7 +194,6 @@ export class ToyyibPayService {
       }
 
       const responseText = await response.text();
-      console.log("ToyyibPay getBillTransactions raw response:", responseText);
 
       // Try to parse as JSON
       try {

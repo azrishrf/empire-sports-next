@@ -20,8 +20,10 @@ function PaymentSuccessContent() {
 
   useEffect(() => {
     const billCode = searchParams.get("billcode");
-    const status = searchParams.get("status");
+    const status = searchParams.get("status_id");
     const orderId = searchParams.get("order_id");
+
+    console.log("test: ", { billCode, status, orderId });
 
     if (billCode) {
       // Check payment status
@@ -77,6 +79,7 @@ function PaymentSuccessContent() {
   }
 
   if (!paymentStatus || paymentStatus.status === "failed" || paymentStatus.status === "error") {
+    console.log("test: ", paymentStatus);
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="max-w-md rounded-lg bg-white p-8 text-center shadow-md">
@@ -183,7 +186,7 @@ function PaymentSuccessContent() {
         <div className="space-y-3">
           <Link
             href="/orders"
-            className="block w-full rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
+            className="block w-full rounded-lg bg-[#283071] px-4 py-2 text-white transition-colors hover:bg-blue-900"
           >
             View Orders
           </Link>

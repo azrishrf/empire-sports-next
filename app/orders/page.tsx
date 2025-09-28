@@ -59,7 +59,7 @@ export default function OrdersPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "paid":
+      case "success":
       case "delivered":
         return "bg-green-100 text-green-800";
       case "processing":
@@ -96,7 +96,7 @@ export default function OrdersPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">My Orders</h1>
-          <p className="mt-2 text-gray-600">Track and manage your order history</p>
+          <p className="mt-2 text-sm text-gray-600">Track and manage your order history</p>
         </div>
 
         {error && (
@@ -135,12 +135,12 @@ export default function OrdersPage() {
           <div className="space-y-6">
             {orders.map((order) => (
               <div key={order.id} className="rounded-lg bg-white p-6 shadow-sm">
-                <div className="mb-4 flex items-center justify-between">
+                <div className="mb-4 items-center justify-between md:flex">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Order {order.orderId}</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">{order.orderId}</h3>
                     <p className="text-sm text-gray-600">Placed on {formatDate(order.createdAt)}</p>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="mt-2 flex items-center gap-2">
                     <span className={`rounded-full px-3 py-1 text-xs font-medium ${getStatusColor(order.status)}`}>
                       {order.status.toUpperCase()}
                     </span>
@@ -188,8 +188,7 @@ export default function OrdersPage() {
 
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <div className="text-sm text-gray-600">
-                    {order.billCode && <span>Bill Code: {order.billCode}</span>}
-                    {order.transactionId && <span className="ml-4">Transaction: {order.transactionId}</span>}
+                    {order.transactionId && <span>Reference Number: {order.transactionId}</span>}
                   </div>
 
                   <div className="flex gap-2">
@@ -203,12 +202,6 @@ export default function OrdersPage() {
                         Complete Payment
                       </a>
                     )}
-                    <button
-                      onClick={loadOrders}
-                      className="rounded-lg bg-gray-100 px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-200"
-                    >
-                      Refresh
-                    </button>
                   </div>
                 </div>
               </div>

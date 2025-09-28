@@ -306,7 +306,7 @@ export default function CartPage() {
 
               <button
                 onClick={handleCheckout}
-                className="mt-8 flex w-full items-center justify-center rounded-lg bg-blue-800 px-6 py-3 font-bold text-white transition-colors hover:bg-blue-900 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mt-8 flex w-full items-center justify-center rounded-lg bg-[#283071] px-6 py-3 font-bold text-white transition-colors hover:bg-blue-900 disabled:opacity-50"
                 disabled={cartItems.length === 0 || isProcessing}
               >
                 {isProcessing ? (
