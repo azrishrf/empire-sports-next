@@ -206,8 +206,6 @@ export class OrderService {
         orderBy("createdAt", "desc"),
       );
 
-      console.log("test: ", q);
-
       const querySnapshot = await getDocs(q);
       const orders: Order[] = [];
 

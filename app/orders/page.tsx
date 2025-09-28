@@ -186,12 +186,6 @@ export default function OrdersPage() {
                   </div>
                 </div>
 
-                {order.notes && (
-                  <div className="mb-4 rounded-lg bg-gray-50 p-3">
-                    <p className="text-sm text-gray-600">{order.notes}</p>
-                  </div>
-                )}
-
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <div className="text-sm text-gray-600">
                     {order.billCode && <span>Bill Code: {order.billCode}</span>}
@@ -199,7 +193,7 @@ export default function OrdersPage() {
                   </div>
 
                   <div className="flex gap-2">
-                    {order.paymentStatus === "pending" && order.paymentUrl && (
+                    {(order.paymentStatus === "pending" || order.paymentStatus === "failed") && order.paymentUrl && (
                       <a
                         href={order.paymentUrl}
                         target="_blank"
