@@ -1,4 +1,4 @@
-import { Product } from "@/data/products";
+import { Product, Review } from "@/data/products";
 import { db } from "@/lib/firebase";
 import { collection, doc, getDoc, getDocs, orderBy, query, where } from "firebase/firestore";
 import { serializeProductForClient, serializeProductsForClient } from "./productUtils";
@@ -125,5 +125,73 @@ export class ProductService {
       console.error("Error fetching featured products:", error);
       throw error;
     }
+  }
+}
+
+// Function to get reviews for a specific product from Firestore
+export async function getProductReviews(productId: string): Promise<Review[]> {
+  try {
+    const product = await ProductService.getProductById(productId);
+    if (product && product.reviews) {
+      return product.reviews;
+    }
+    return [];
+  } catch (error) {
+    console.error(`Error fetching reviews for product ${productId}:`, error);
+    return [];
+  }
+}
+
+// Function to calculate average rating for a product from Firestore
+export async function getAverageRating(productId: string): Promise<number> {
+  try {
+    const reviews = await getProductReviews(productId);
+    if (reviews.length === 0) return 0;
+
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    return Math.round((totalRating / reviews.length) * 10) / 10;
+  } catch (error) {
+    console.error(`Error calculating average rating for product ${productId}:`, error);
+    return 0;
+  }
+}
+
+// Function to get review count for a product
+export async function getReviewCount(productId: string): Promise<number> {
+  try {
+    const reviews = await getProductReviews(productId);
+    return reviews.length;
+  } catch (error) {
+    console.error(`Error getting review count for product ${productId}:`, error);
+    return 0;
+  }
+}
+
+// Function to get reviews with pagination
+export async function getProductReviewsPaginated(
+  productId: string,
+  page: number = 1,
+  limit: number = 10,
+): Promise<{ reviews: Review[]; totalCount: number; hasMore: boolean }> {
+  try {
+    const allReviews = await getProductReviews(productId);
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+
+    const paginatedReviews = allReviews.slice(startIndex, endIndex);
+    const hasMore = endIndex < allReviews.length;
+
+    return {
+      reviews: paginatedReviews,
+      totalCount: allReviews.length,
+      hasMore,
+    };
+  } catch (error) {
+    console.error(`Error getting paginated reviews for product ${productId}:`, error);
+    return {
+      reviews: [],
+      totalCount: 0,
+      hasMore: false,
+    };
   }
 }

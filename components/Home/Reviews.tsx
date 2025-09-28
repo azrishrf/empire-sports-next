@@ -32,19 +32,35 @@ const StarRating = () => (
   </div>
 );
 
-export default function Reviews() {
+interface ReviewsProps {
+  backgroundColor?: string; // e.g. "bg-gray-800"
+  titleColor?: string; // e.g. "text-white"
+  descriptionColor?: string; // e.g. "text-gray-300"
+}
+
+export default function Reviews({
+  backgroundColor = "bg-gray-800",
+  titleColor = "text-white",
+  descriptionColor = "text-gray-300",
+}: ReviewsProps) {
   return (
-    <section className="bg-gray-800">
+    <section className={backgroundColor}>
       <div className="container">
-        <h2 className="mb-4 text-center text-2xl font-semibold text-white">Our Reviews</h2>
-        <p className="mb-6 text-center text-xs text-gray-300 md:text-sm">
+        <h2 className={`mb-4 text-center text-2xl font-semibold ${titleColor}`} data-aos="fade-up">
+          Our Reviews
+        </h2>
+        <p className={`mb-6 text-center text-xs md:text-sm ${descriptionColor}`} data-aos="fade-up">
           Various reviews that are satisfied with the products and services we provide throughout our business.
         </p>
         <div className="flex flex-col items-center justify-center gap-6 text-sm lg:flex-row">
           {reviews.map((review) => (
             <div
               key={review.id}
-              className="max-w-96 rounded-3xl bg-white px-5 py-7 text-center text-black transition-shadow duration-300 hover:shadow-xl"
+              data-aos="fade-zoom-in"
+              data-aos-easing="ease-in-back"
+              data-aos-delay="300"
+              data-aos-offset="0"
+              className="max-w-96 rounded-3xl bg-white px-5 py-7 text-center text-black transition-shadow duration-300"
             >
               <Image
                 src={review.image}

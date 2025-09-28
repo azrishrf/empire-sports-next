@@ -25,7 +25,7 @@ export default function Services() {
   ];
 
   return (
-    <section className="container">
+    <section className="container" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="400">
       <div
         className="mx-auto grid grid-cols-1 gap-4 rounded-3xl px-3 py-8 shadow-2xl sm:grid-cols-2 sm:flex-row sm:justify-around lg:grid-cols-4"
         style={{ boxShadow: "rgba(0, 0, 0, 0.2) 5px 4px 11px 2px" }}

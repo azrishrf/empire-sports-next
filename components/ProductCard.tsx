@@ -18,12 +18,12 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Link href={`/collections/${product.category.toLowerCase()}/${product.id}`} className="group">
       <div className="overflow-hidden rounded-lg border border-gray-300 bg-white transition-shadow duration-300">
         {/* Product Image */}
-        <div className="relative aspect-square overflow-hidden bg-gray-100">
+        <div className="relative aspect-square overflow-hidden bg-white" data-aos="zoom-out" data-aos-duration="800">
           <Image
             src={product.image}
             alt={product.name}
             fill
-            className="object-contain transition-transform duration-300 group-hover:scale-105"
+            className="object-contain transition-transform duration-300 group-hover:scale-110"
           />
         </div>
 

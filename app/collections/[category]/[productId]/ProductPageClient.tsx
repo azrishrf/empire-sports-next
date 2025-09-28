@@ -1,21 +1,15 @@
 "use client";
 
+import ProductTabs from "@/components/Product/ProductTabs";
 import { useCart } from "@/contexts/CartContext";
 import { Product } from "@/data/products";
 import Image from "next/image";
 import { useState } from "react";
 import Toastify from "toastify-js";
 
-interface ProductPageClientProps {
-  product: Product;
-  breadcrumbItems: Array<{ label: string; href: string }>;
-}
-
-export default function ProductPageClient({ product, breadcrumbItems }: ProductPageClientProps) {
-  const [selectedImage, setSelectedImage] = useState(0);
+export default function ProductPageClient({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState("DESCRIPTION");
   const { addItem } = useCart();
 
   const handleQuantityChange = (change: number) => {
@@ -66,13 +60,13 @@ export default function ProductPageClient({ product, breadcrumbItems }: ProductP
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Product Images */}
         <div className="space-y-4">
           {/* Main Image */}
-          <div className="aspect-square overflow-hidden rounded-lg bg-white">
+          <div className="aspect-square overflow-hidden rounded-lg bg-white" data-aos="zoom-in" data-aos-duration="800">
             <Image
-              src={product.images?.[selectedImage] || product.image}
+              src={product.image}
               alt={product.name}
               width={600}
               height={600}
@@ -81,7 +75,7 @@ export default function ProductPageClient({ product, breadcrumbItems }: ProductP
           </div>
 
           {/* Thumbnail Images */}
-          {product.images && product.images.length > 1 && (
+          {/* {product.images && product.images.length > 1 && (
             <div className="flex space-x-2">
               {product.images.map((image, index) => (
                 <button
@@ -101,13 +95,13 @@ export default function ProductPageClient({ product, breadcrumbItems }: ProductP
                 </button>
               ))}
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Product Details */}
         <div className="space-y-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+            <h1 className="text-xl font-bold text-gray-900 md:text-3xl">{product.name}</h1>
             <p className="mt-4 text-2xl font-bold text-gray-900">{product.price}</p>
           </div>
 
@@ -141,8 +135,8 @@ export default function ProductPageClient({ product, breadcrumbItems }: ProductP
                   onClick={() => setSelectedSize(size)}
                   className={`rounded border px-4 py-2 text-sm font-medium transition-colors ${
                     selectedSize === size
-                      ? "border-blue-500 bg-blue-500 text-white"
-                      : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                      ? "border-red-900 bg-red-900 text-white"
+                      : "border-gray-300 bg-white text-gray-700 hover:bg-gray-200"
                   }`}
                 >
                   {size}
@@ -180,7 +174,7 @@ export default function ProductPageClient({ product, breadcrumbItems }: ProductP
           <div className="flex space-x-4">
             <button
               onClick={handleAddToCart}
-              className="flex-1 rounded-lg bg-[#283071] px-6 py-3 font-bold text-white transition-colors hover:bg-blue-900"
+              className="flex-1 cursor-pointer rounded-lg bg-[#283071] px-6 py-3 font-bold text-white transition-colors hover:bg-blue-900"
             >
               ADD TO CART
             </button>
@@ -189,87 +183,7 @@ export default function ProductPageClient({ product, breadcrumbItems }: ProductP
       </div>
 
       {/* Product Tabs */}
-      <div className="mt-12">
-        <div className="flex space-x-2 text-sm">
-          <button
-            onClick={() => setActiveTab("DESCRIPTION")}
-            className={`rounded-xl px-6 py-3 font-medium ${
-              activeTab === "DESCRIPTION"
-                ? "bg-red-800 text-white"
-                : "cursor-pointer bg-gray-200 text-gray-500 transition-colors hover:bg-gray-300"
-            }`}
-          >
-            DESCRIPTION
-          </button>
-          <button
-            onClick={() => setActiveTab("DETAILS")}
-            className={`rounded-xl px-6 py-3 font-medium ${
-              activeTab === "DETAILS"
-                ? "bg-red-800 text-white"
-                : "cursor-pointer bg-gray-200 text-gray-500 transition-colors hover:bg-gray-300"
-            }`}
-          >
-            DETAILS
-          </button>
-          <button
-            onClick={() => setActiveTab("REVIEW")}
-            className={`rounded-xl px-6 py-3 font-medium ${
-              activeTab === "REVIEW"
-                ? "bg-red-800 text-white"
-                : "cursor-pointer bg-gray-200 text-gray-500 transition-colors hover:bg-gray-300"
-            }`}
-          >
-            REVIEW
-          </button>
-        </div>
-
-        <div className="mt-4 rounded-lg border border-gray-200 bg-white p-6">
-          {activeTab === "DESCRIPTION" && (
-            <div>
-              <p className="text-sm leading-relaxed text-gray-700">{product.description}</p>
-            </div>
-          )}
-          {activeTab === "DETAILS" && (
-            <div>
-              <h4 className="mb-3 font-bold">Product Details</h4>
-              <table className="w-full border-separate [border-spacing:0.5rem] text-sm text-gray-700">
-                <tbody>
-                  <tr>
-                    <td className="w-32 font-semibold">Brand:</td>
-                    <td>{product.brand || "N/A"}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-semibold">Model:</td>
-                    <td>{product.name}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-semibold">Colorway:</td>
-                    <td>{product.colorway || "N/A"}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-semibold">Category:</td>
-                    <td>{product.category}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-semibold">Material:</td>
-                    <td>{product.material || "N/A"}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-semibold">Gender:</td>
-                    <td>{product.gender || "N/A"}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          )}
-          {activeTab === "REVIEW" && (
-            <div>
-              <h4 className="mb-3 font-bold">Customer Reviews</h4>
-              <p className="text-gray-700">No reviews yet. Be the first to review this product!</p>
-            </div>
-          )}
-        </div>
-      </div>
+      <ProductTabs product={product} />
     </div>
   );
 }

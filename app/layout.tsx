@@ -1,3 +1,4 @@
+import AOSProvider from "@/components/AOSProvider";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -24,9 +25,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`min-h-screen ${poppins.className}`}>
         <AuthProvider>
           <CartProvider>
-            <Header />
-            {children}
-            <Footer />
+            <AOSProvider>
+              <Header />
+              {children}
+              <Footer />
+            </AOSProvider>
           </CartProvider>
         </AuthProvider>
       </body>

@@ -16,8 +16,14 @@ export default async function TopPicks() {
   }
   return (
     <section className="container">
-      <h2 className="mb-4 text-center text-2xl font-semibold">Top Picks</h2>
-      <p className="mb-6 text-center text-xs text-black md:text-sm">
+      <h2 className="mb-4 text-center text-2xl font-semibold" data-aos="fade-up">
+        Top Picks
+      </h2>
+      <p
+        className="mx-auto mb-6 max-w-3xl text-center text-xs text-black md:text-sm"
+        data-aos="fade-up"
+        // data-aos-delay="100"
+      >
         A selection of shoes that is a favorite of every shoe enthusiast and also our customers. Curated daily from
         brands such as adidas, Yeezy, Nike, Jordan, Adidas and more.
       </p>
@@ -27,24 +33,24 @@ export default async function TopPicks() {
             <p>Loading featured products...</p>
           </div>
         ) : (
-          products.map((product) => (
+          products.map((product, index) => (
             <Link
               href={`/collections/${product.category.toLowerCase()}/${product.id}`}
               key={product.id}
-              className="group mx-auto block w-full max-w-xs"
+              className="group mx-auto w-full max-w-xs"
             >
-              <div className="overflow-hidden rounded-lg">
+              <div className="overflow-hidden rounded-lg" data-aos="zoom-in" data-aos-delay={`${300 + index * 100}`}>
                 <Image
                   src={product.image}
                   width={250}
                   height={132}
                   alt={product.name}
-                  className="mb-5 aspect-video h-32 w-full object-contain transition-transform duration-500 group-hover:scale-110"
+                  className="mb-5 aspect-video h-44 w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
-              <h3 className="mb-2 text-sm font-medium lg:h-12">{product.name}</h3>
+              <h3 className="text-sm font-medium lg:h-12">{product.name}</h3>
               <div className="flex items-center justify-center gap-2">
-                <span className="text-sm font-bold text-green-600">{product.price}</span>
+                <span className="text-lg font-bold text-green-600">{product.price}</span>
               </div>
             </Link>
           ))

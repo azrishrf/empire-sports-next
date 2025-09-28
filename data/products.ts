@@ -1,5 +1,15 @@
 import { Timestamp } from "firebase/firestore";
 
+export interface Review {
+  id: string;
+  productId: string;
+  userName: string;
+  userImage: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
 export interface Product {
   id: string;
   category: string;
@@ -14,6 +24,7 @@ export interface Product {
   colorway?: string;
   material?: string;
   gender?: string;
+  reviews?: Review[];
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 }
@@ -39,6 +50,37 @@ export const productsData = {
       colorway: "Blue/White/Core Black",
       material: "Primeknit+ upper, Boost midsole, Continental rubber outsole",
       gender: "Men",
+      reviews: [
+        {
+          id: "r-adidas-ultraboost-1",
+          productId: "adidas-ultraboost-22-blue",
+          userName: "Ahmad Rahman",
+          userImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Amazing running shoes! The boost technology really makes a difference in comfort and energy return. Perfect for long runs.",
+          date: "2024-02-15",
+        },
+        {
+          id: "r-adidas-ultraboost-2",
+          productId: "adidas-ultraboost-22-blue",
+          userName: "Sarah Lee",
+          userImage: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Great quality and fit. The blue colorway is stunning. Fast delivery and excellent customer service.",
+          date: "2024-02-20",
+        },
+        {
+          id: "r-adidas-ultraboost-3",
+          productId: "adidas-ultraboost-22-blue",
+          userName: "Marcus Johnson",
+          userImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment: "Comfortable shoes but took some time to break in. Overall satisfied with the purchase.",
+          date: "2024-02-25",
+        },
+      ],
     },
     {
       id: "asics-gel-kinsei-blast-red",
@@ -59,6 +101,37 @@ export const productsData = {
       colorway: "Red/Black/White",
       material: "Engineered mesh upper, FlyteFoam Blast+ midsole, GEL technology",
       gender: "Men",
+      reviews: [
+        {
+          id: "r-asics-kinsei-1",
+          productId: "asics-gel-kinsei-blast-red",
+          userName: "David Tan",
+          userImage: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Excellent cushioning and support. The red color is vibrant and looks great. Perfect for marathon training.",
+          date: "2024-03-01",
+        },
+        {
+          id: "r-asics-kinsei-2",
+          productId: "asics-gel-kinsei-blast-red",
+          userName: "Lisa Wong",
+          userImage: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Best running shoes I've ever owned! The GEL technology really works. Highly recommend for serious runners.",
+          date: "2024-03-05",
+        },
+        {
+          id: "r-asics-kinsei-3",
+          productId: "asics-gel-kinsei-blast-red",
+          userName: "Mohamed Ali",
+          userImage: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment: "Good quality shoes with great shock absorption. Took a few runs to break them in properly.",
+          date: "2024-03-10",
+        },
+      ],
     },
     {
       id: "nike-pegasus-39-black",
@@ -79,6 +152,36 @@ export const productsData = {
       colorway: "Black/White/Anthracite",
       material: "Mesh upper, Nike Air Zoom units, Rubber outsole",
       gender: "Men",
+      reviews: [
+        {
+          id: "r-nike-pegasus-1",
+          productId: "nike-pegasus-39-black",
+          userName: "Jennifer Chen",
+          userImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Amazing daily trainer! The Air Zoom units provide excellent responsiveness. Perfect for my morning runs.",
+          date: "2024-03-12",
+        },
+        {
+          id: "r-nike-pegasus-2",
+          productId: "nike-pegasus-39-black",
+          userName: "Kevin Smith",
+          userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment: "Reliable and comfortable. Great value for money. The black colorway goes with everything.",
+          date: "2024-03-18",
+        },
+        {
+          id: "r-nike-pegasus-3",
+          productId: "nike-pegasus-39-black",
+          userName: "Fatimah Abdullah",
+          userImage: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment: "Good running shoes for daily training. Comfortable fit and decent durability.",
+          date: "2024-03-22",
+        },
+      ],
     },
     {
       id: "under-armour-hovr-phantom-black",
@@ -99,6 +202,35 @@ export const productsData = {
       colorway: "Black/White/Pitch Gray",
       material: "Spacer mesh upper, HOVR foam midsole, 3D-molded sockliner",
       gender: "Men",
+      reviews: [
+        {
+          id: "r-ua-hovr-1",
+          productId: "under-armour-hovr-phantom-black",
+          userName: "Michael Rodriguez",
+          userImage: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment: "The HOVR technology is impressive! Great energy return and the app connectivity is a nice touch.",
+          date: "2024-03-28",
+        },
+        {
+          id: "r-ua-hovr-2",
+          productId: "under-armour-hovr-phantom-black",
+          userName: "Priya Sharma",
+          userImage: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment: "Comfortable running shoes with good cushioning. The black design is sleek and professional.",
+          date: "2024-04-02",
+        },
+        {
+          id: "r-ua-hovr-3",
+          productId: "under-armour-hovr-phantom-black",
+          userName: "James Wilson",
+          userImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment: "Excellent shoes for long distance running. The zero-gravity feel is real! Highly recommended.",
+          date: "2024-04-08",
+        },
+      ],
     },
   ],
   sneakers: [
@@ -117,6 +249,38 @@ export const productsData = {
       colorway: "Black/Varsity Red/White",
       material: "Leather upper, Rubber outsole",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-jordan-bred-1",
+          productId: "nike-jordan-1-bred-toe",
+          userName: "Alex Thompson",
+          userImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Classic Jordan 1 silhouette with an amazing colorway. Perfect for casual wear and street style. Quality is top-notch!",
+          date: "2024-04-15",
+        },
+        {
+          id: "r-jordan-bred-2",
+          productId: "nike-jordan-1-bred-toe",
+          userName: "Maya Patel",
+          userImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Love the bred toe colorway! Comfortable fit and goes with everything. Fast shipping and authentic product.",
+          date: "2024-04-20",
+        },
+        {
+          id: "r-jordan-bred-3",
+          productId: "nike-jordan-1-bred-toe",
+          userName: "Ryan Baker",
+          userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Timeless design that never goes out of style. Great leather quality and construction. Worth every penny!",
+          date: "2024-04-25",
+        },
+      ],
     },
     {
       id: "nike-zoom-fly-off-white",
@@ -137,6 +301,38 @@ export const productsData = {
       colorway: "White/Cone/Black",
       material: "Translucent upper, React foam midsole, Carbon fiber plate",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-offwhite-zoom-1",
+          productId: "nike-zoom-fly-off-white",
+          userName: "Streetwear King",
+          userImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Grail piece! The deconstructed design is revolutionary. Virgil's vision perfectly executed. Worth every penny for collectors.",
+          date: "2024-05-01",
+        },
+        {
+          id: "r-offwhite-zoom-2",
+          productId: "nike-zoom-fly-off-white",
+          userName: "Sneaker Collector",
+          userImage: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Iconic collaboration! The translucent upper and exposed foam are genius. Limited edition at its finest.",
+          date: "2024-05-05",
+        },
+        {
+          id: "r-offwhite-zoom-3",
+          productId: "nike-zoom-fly-off-white",
+          userName: "Fashion Forward",
+          userImage: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Unique design that redefined sneaker culture. Premium quality and attention to detail. A must-have piece.",
+          date: "2024-05-10",
+        },
+      ],
     },
     {
       id: "nike-dunk-low-panda",
@@ -153,6 +349,37 @@ export const productsData = {
       colorway: "White/Black",
       material: "Leather upper, Rubber cupsole",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-dunk-panda-1",
+          productId: "nike-dunk-low-panda",
+          userName: "Classic Style",
+          userImage: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Perfect colorway that goes with everything! Clean design and comfortable fit. These are my go-to everyday sneakers.",
+          date: "2024-05-15",
+        },
+        {
+          id: "r-dunk-panda-2",
+          productId: "nike-dunk-low-panda",
+          userName: "Minimalist Fan",
+          userImage: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Love the simplicity of the panda colorway. Great quality leather and true to size. Highly recommended!",
+          date: "2024-05-20",
+        },
+        {
+          id: "r-dunk-panda-3",
+          productId: "nike-dunk-low-panda",
+          userName: "Street Casual",
+          userImage: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment: "Solid everyday sneaker. The black and white combo is timeless. Good value for the price.",
+          date: "2024-05-25",
+        },
+      ],
     },
   ],
   clothing: [
@@ -174,6 +401,37 @@ export const productsData = {
       colorway: "White/Navy",
       material: "100% Cotton",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-champion-logo-1",
+          productId: "champion-big-logo-tee",
+          userName: "Casual Comfort",
+          userImage: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Great quality cotton tee! The logo print is crisp and the fit is perfect. Comfortable for daily wear.",
+          date: "2024-06-01",
+        },
+        {
+          id: "r-champion-logo-2",
+          productId: "champion-big-logo-tee",
+          userName: "Vintage Lover",
+          userImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Love the classic Champion design! Soft fabric and true to size. Perfect for that retro athletic look.",
+          date: "2024-06-05",
+        },
+        {
+          id: "r-champion-logo-3",
+          productId: "champion-big-logo-tee",
+          userName: "Everyday Style",
+          userImage: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment: "Solid basic tee with good quality. The logo adds a nice sporty touch. Good value for money.",
+          date: "2024-06-10",
+        },
+      ],
     },
     {
       id: "champion-jersey-ringer-black",
@@ -193,6 +451,38 @@ export const productsData = {
       colorway: "Black/White",
       material: "Cotton/Polyester blend",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-champion-ringer-1",
+          productId: "champion-jersey-ringer-black",
+          userName: "Retro Fan",
+          userImage: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Love the vintage ringer style! The contrasting trim gives it a classic athletic look. Comfortable fit.",
+          date: "2024-06-12",
+        },
+        {
+          id: "r-champion-ringer-2",
+          productId: "champion-jersey-ringer-black",
+          userName: "Timeless Style",
+          userImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Perfect vintage tee! The jersey fabric is soft and the design is timeless. Fits exactly as expected.",
+          date: "2024-06-15",
+        },
+        {
+          id: "r-champion-ringer-3",
+          productId: "champion-jersey-ringer-black",
+          userName: "Classic Wear",
+          userImage: "/images/khairul aming.jpg",
+          rating: 4,
+          comment:
+            "Nice retro design with good quality material. The ringer details add a nice touch. Comfortable daily wear.",
+          date: "2024-06-18",
+        },
+      ],
     },
     {
       id: "stussy-dsm-london-black",
@@ -212,6 +502,38 @@ export const productsData = {
       colorway: "Black/White",
       material: "100% Cotton",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-stussy-dsm-black-1",
+          productId: "stussy-dsm-london-black",
+          userName: "Tyler Morrison",
+          userImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Exclusive DSM collab is fire! Premium quality cotton and the London graphic is clean. Limited edition vibes.",
+          date: "2024-07-01",
+        },
+        {
+          id: "r-stussy-dsm-black-2",
+          productId: "stussy-dsm-london-black",
+          userName: "Zoe Chen",
+          userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Love this collaboration! The black colorway is versatile and the fit is perfect. Stüssy quality as expected.",
+          date: "2024-07-05",
+        },
+        {
+          id: "r-stussy-dsm-black-3",
+          productId: "stussy-dsm-london-black",
+          userName: "Marcus Williams",
+          userImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Solid streetwear piece. The DSM London print is unique and the material feels premium. Great addition to any collection.",
+          date: "2024-07-10",
+        },
+      ],
     },
     {
       id: "stussy-dsm-london-white",
@@ -231,6 +553,38 @@ export const productsData = {
       colorway: "White/Black",
       material: "100% Cotton",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-stussy-dsm-white-1",
+          productId: "stussy-dsm-london-white",
+          userName: "Emma Johnson",
+          userImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Clean white colorway is perfect for summer! The DSM collaboration adds that exclusive touch. Great quality tee.",
+          date: "2024-07-12",
+        },
+        {
+          id: "r-stussy-dsm-white-2",
+          productId: "stussy-dsm-london-white",
+          userName: "Jake Peterson",
+          userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Pristine white tee with amazing graphics! Stüssy x DSM is always a winning combo. Fits perfectly and looks fresh.",
+          date: "2024-07-18",
+        },
+        {
+          id: "r-stussy-dsm-white-3",
+          productId: "stussy-dsm-london-white",
+          userName: "Sophia Martinez",
+          userImage: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Love the minimalist approach with the white base. The London print stands out beautifully. Premium cotton feel.",
+          date: "2024-07-22",
+        },
+      ],
     },
   ],
   sandals: [
@@ -252,6 +606,38 @@ export const productsData = {
       colorway: "Green/White",
       material: "Synthetic upper, Cloudfoam Plus footbed",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-adidas-comfort-green-1",
+          productId: "adidas-adilette-comfort-green",
+          userName: "Oliver Davis",
+          userImage: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Most comfortable slides ever! The Cloudfoam Plus is incredible and the green color is unique. Perfect for pool days.",
+          date: "2024-08-01",
+        },
+        {
+          id: "r-adidas-comfort-green-2",
+          productId: "adidas-adilette-comfort-green",
+          userName: "Isabella Rodriguez",
+          userImage: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Super comfy slides with great cushioning. The green colorway is fresh and different from the usual black/white options.",
+          date: "2024-08-05",
+        },
+        {
+          id: "r-adidas-comfort-green-3",
+          productId: "adidas-adilette-comfort-green",
+          userName: "Noah Thompson",
+          userImage: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Great quality slides for the price. The comfort level is excellent and they dry quickly after swimming.",
+          date: "2024-08-10",
+        },
+      ],
     },
     {
       id: "adidas-adilette-sandal-classic",
@@ -268,6 +654,36 @@ export const productsData = {
       colorway: "Navy/White",
       material: "Synthetic upper, EVA footbed",
       gender: "Men",
+      reviews: [
+        {
+          id: "r-adidas-classic-sandal-1",
+          productId: "adidas-adilette-sandal-classic",
+          userName: "Ethan Brown",
+          userImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Classic Adidas slides that never go out of style. Comfortable for daily wear and the navy color is clean.",
+          date: "2024-08-12",
+        },
+        {
+          id: "r-adidas-classic-sandal-2",
+          productId: "adidas-adilette-sandal-classic",
+          userName: "Ava Wilson",
+          userImage: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment: "The original and still the best! Perfect for gym, beach, or just lounging around. Timeless design.",
+          date: "2024-08-15",
+        },
+        {
+          id: "r-adidas-classic-sandal-3",
+          productId: "adidas-adilette-sandal-classic",
+          userName: "Liam Garcia",
+          userImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment: "Solid everyday slides. Good value for money and the classic 3-stripes look never gets old.",
+          date: "2024-08-18",
+        },
+      ],
     },
     {
       id: "nike-offcourt-slides-black",
@@ -287,6 +703,37 @@ export const productsData = {
       colorway: "Black/White",
       material: "Synthetic leather upper, Foam midsole",
       gender: "Men",
+      reviews: [
+        {
+          id: "r-nike-offcourt-black-1",
+          productId: "nike-offcourt-slides-black",
+          userName: "Mason Lee",
+          userImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Great post-workout slides! The foam cushioning is perfect for recovery and the black color is sleek.",
+          date: "2024-08-20",
+        },
+        {
+          id: "r-nike-offcourt-black-2",
+          productId: "nike-offcourt-slides-black",
+          userName: "Chloe Anderson",
+          userImage: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Love these Nike slides! Super comfortable and the synthetic leather feels premium. Perfect for summer.",
+          date: "2024-08-25",
+        },
+        {
+          id: "r-nike-offcourt-black-3",
+          productId: "nike-offcourt-slides-black",
+          userName: "Lucas Martinez",
+          userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment: "Comfortable slides with good support. The flex grooves make walking natural. Great for gym use.",
+          date: "2024-08-28",
+        },
+      ],
     },
     {
       id: "nike-offcourt-slides-red",
@@ -306,6 +753,37 @@ export const productsData = {
       colorway: "Red/White",
       material: "Synthetic leather upper, Foam midsole",
       gender: "Men",
+      reviews: [
+        {
+          id: "r-nike-offcourt-red-1",
+          productId: "nike-offcourt-slides-red",
+          userName: "Harper Johnson",
+          userImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Bold red color that stands out! Same great comfort as the black ones but with more personality. Love them!",
+          date: "2024-09-01",
+        },
+        {
+          id: "r-nike-offcourt-red-2",
+          productId: "nike-offcourt-slides-red",
+          userName: "Jackson Davis",
+          userImage: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment: "Vibrant red colorway is amazing! Great for making a statement at the pool. Comfort is top-notch.",
+          date: "2024-09-05",
+        },
+        {
+          id: "r-nike-offcourt-red-3",
+          productId: "nike-offcourt-slides-red",
+          userName: "Aria Thompson",
+          userImage: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Eye-catching red slides that are super comfortable. Perfect for adding some color to summer outfits.",
+          date: "2024-09-08",
+        },
+      ],
     },
   ],
   basketball: [
@@ -328,6 +806,38 @@ export const productsData = {
       colorway: "Grey/Black/Yellow",
       material: "Warp upper, UA Flow cushioning, Rubber outsole",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-curry-10-iron-1",
+          productId: "curry-10-iron-sharpens-iron",
+          userName: "Carter Wilson",
+          userImage: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Best basketball shoes I've ever played in! The UA Flow technology is incredible for court feel. Curry's signature is elite!",
+          date: "2024-09-10",
+        },
+        {
+          id: "r-curry-10-iron-2",
+          productId: "curry-10-iron-sharpens-iron",
+          userName: "Maya Rodriguez",
+          userImage: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Amazing performance shoe! Great for quick cuts and the traction is unmatched. The colorway is fire too!",
+          date: "2024-09-12",
+        },
+        {
+          id: "r-curry-10-iron-3",
+          productId: "curry-10-iron-sharpens-iron",
+          userName: "Aiden Brown",
+          userImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Solid basketball shoe with excellent support. The 'Iron Sharpens Iron' theme is motivating. Great for serious players.",
+          date: "2024-09-15",
+        },
+      ],
     },
     {
       id: "kyrie-infinity-nrg-ep",
@@ -348,6 +858,38 @@ export const productsData = {
       colorway: "Multi-Color/Black/White",
       material: "Mesh upper, Zoom Air cushioning, Curved rubber outsole",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-kyrie-infinity-1",
+          productId: "kyrie-infinity-nrg-ep",
+          userName: "Jordan Smith",
+          userImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Perfect for quick cuts and unpredictable moves! The curved outsole gives amazing traction. Kyrie's best shoe yet!",
+          date: "2024-09-18",
+        },
+        {
+          id: "r-kyrie-infinity-2",
+          productId: "kyrie-infinity-nrg-ep",
+          userName: "Zara Martinez",
+          userImage: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Amazing basketball shoe for guards! The colorway is vibrant and the performance is top-tier. Zoom Air feels great.",
+          date: "2024-09-20",
+        },
+        {
+          id: "r-kyrie-infinity-3",
+          productId: "kyrie-infinity-nrg-ep",
+          userName: "Blake Johnson",
+          userImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Great for creative players who need flexibility. The lightweight design and traction are perfect for my playing style.",
+          date: "2024-09-22",
+        },
+      ],
     },
     {
       id: "curry-warriors-jersey-2022",
@@ -367,6 +909,38 @@ export const productsData = {
       colorway: "Royal Blue/Yellow/White",
       material: "Dri-FIT polyester",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-curry-warriors-jersey-1",
+          productId: "curry-warriors-jersey-2022",
+          userName: "Kai Wilson",
+          userImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Official championship jersey from the 2022-23 season! Quality is amazing and represents the dynasty perfectly.",
+          date: "2024-09-25",
+        },
+        {
+          id: "r-curry-warriors-jersey-2",
+          productId: "curry-warriors-jersey-2022",
+          userName: "Luna Garcia",
+          userImage: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Love representing Curry and the Warriors! The Dri-FIT material is comfortable and the colors are vibrant.",
+          date: "2024-09-26",
+        },
+        {
+          id: "r-curry-warriors-jersey-3",
+          productId: "curry-warriors-jersey-2022",
+          userName: "Phoenix Davis",
+          userImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Authentic NBA jersey with great quality. Perfect for game nights or casual wear. Warriors championship legacy!",
+          date: "2024-09-27",
+        },
+      ],
     },
     {
       id: "wilson-nba-curry-basketball",
@@ -386,6 +960,38 @@ export const productsData = {
       colorway: "Orange/Black/White",
       material: "Rubber construction, Deep channel design",
       gender: "Unisex",
+      reviews: [
+        {
+          id: "r-wilson-curry-ball-1",
+          productId: "wilson-nba-curry-basketball",
+          userName: "River Thompson",
+          userImage: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face",
+          rating: 4.5,
+          comment:
+            "Great outdoor basketball with amazing grip! The Curry graphics are sick and it bounces perfectly. Love Wilson quality.",
+          date: "2024-09-28",
+        },
+        {
+          id: "r-wilson-curry-ball-2",
+          productId: "wilson-nba-curry-basketball",
+          userName: "Sage Martinez",
+          userImage: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Perfect for outdoor courts! Durable rubber construction and the deep channels give excellent control. Curry fan approved!",
+          date: "2024-09-29",
+        },
+        {
+          id: "r-wilson-curry-ball-3",
+          productId: "wilson-nba-curry-basketball",
+          userName: "Atlas Johnson",
+          userImage: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Official NBA size and weight with cool Curry branding. Great for practice and pickup games. Wilson never disappoints.",
+          date: "2024-09-30",
+        },
+      ],
     },
   ],
 };

@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumb";
+import Reviews from "@/components/Home/Reviews";
 import { categoryConfig } from "@/data/products";
 import { ProductService } from "@/lib/productService";
 import { notFound } from "next/navigation";
@@ -35,7 +36,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Breadcrumb items={breadcrumbItems} />
-        <ProductPageClient product={product} breadcrumbItems={breadcrumbItems} />
+        <ProductPageClient product={product} />
+        <Reviews backgroundColor="bg-gray-100" titleColor="text-black" descriptionColor="text-black" />
       </div>
     );
   } catch (error) {
