@@ -1,4 +1,4 @@
-import { ServerOrderService } from "@/lib/serverOrderService.mock";
+import { ServerOrderService } from "@/lib/serverOrderService";
 import { ToyyibPayService } from "@/lib/toyyibpay";
 import { NextRequest, NextResponse } from "next/server";
 
