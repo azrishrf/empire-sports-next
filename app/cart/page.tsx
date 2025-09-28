@@ -3,6 +3,7 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
+import { OrderService } from "@/lib/orderService";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,12 +15,94 @@ export default function CartPage() {
   const router = useRouter();
   const [removingItems, setRemovingItems] = useState<Set<string>>(new Set());
 
-  const handleCheckout = () => {
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleCheckout = async () => {
     if (!user) {
       router.push("/auth");
-    } else {
-      // Proceed with checkout logic
-      alert("Proceeding to checkout...");
+      return;
+    }
+
+    if (cartItems.length === 0) {
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      const orderId = `ORDER-${Date.now()}`;
+
+      // Calculate totals
+      const itemsWithSubtotal = cartItems.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        size: item.size,
+        subtotal: item.price * item.quantity,
+      }));
+
+      const customerPhone = "01141231312"; // You might want to collect this from user profile
+
+      // Create payment request
+      const paymentData = {
+        orderId,
+        amount: estimatedTotal,
+        customerName: user.displayName || user.email || "Customer",
+        customerEmail: user.email || "",
+        customerPhone,
+        items: itemsWithSubtotal,
+      };
+
+      const response = await fetch("/api/payment/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(paymentData),
+      });
+
+      const result = await response.json();
+
+      if (result.success && result.data.billCode) {
+        console.log("Payment created successfully, now creating order in Firestore...");
+
+        // Create order in Firestore client-side
+        try {
+          const orderDocId = await OrderService.createOrder({
+            orderId,
+            userId: user.uid,
+            customerName: user.displayName || user.email || "Customer",
+            customerEmail: user.email || "",
+            customerPhone,
+            items: itemsWithSubtotal,
+            subtotal,
+            shippingFee,
+            discount,
+            totalAmount: estimatedTotal,
+            status: "pending",
+            paymentStatus: "pending",
+            billCode: result.data.billCode,
+            paymentUrl: result.data.paymentUrl,
+          });
+
+          console.log("Order created in Firestore with ID:", orderDocId);
+
+          // Clear cart and redirect to payment
+          // Note: You might want to clear the cart here or after successful payment
+          window.location.href = result.data.paymentUrl;
+        } catch (orderError) {
+          console.error("Failed to create order in Firestore:", orderError);
+          alert("Failed to create order. Please try again.");
+        }
+      } else {
+        alert(`Payment error: ${result.message || "Failed to create payment"}`);
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("An error occurred during checkout. Please try again.");
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -224,16 +307,25 @@ export default function CartPage() {
               <button
                 onClick={handleCheckout}
                 className="mt-8 flex w-full items-center justify-center rounded-lg bg-blue-800 px-6 py-3 font-bold text-white transition-colors hover:bg-blue-900 disabled:cursor-not-allowed disabled:opacity-50"
-                disabled={cartItems.length === 0}
+                disabled={cartItems.length === 0 || isProcessing}
               >
-                <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fillRule="evenodd"
-                    d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zM8 6a2 2 0 114 0v1H8V6zm0 3a1 1 0 012 0 1 1 0 11-2 0zm4 0a1 1 0 10-2 0 1 1 0 102 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                CHECKOUT
+                {isProcessing ? (
+                  <>
+                    <div className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                    PROCESSING...
+                  </>
+                ) : (
+                  <>
+                    <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fillRule="evenodd"
+                        d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zM8 6a2 2 0 114 0v1H8V6zm0 3a1 1 0 012 0 1 1 0 11-2 0zm4 0a1 1 0 10-2 0 1 1 0 102 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    CHECKOUT
+                  </>
+                )}
               </button>
             </div>
           </div>

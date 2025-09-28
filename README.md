@@ -12,6 +12,8 @@ A modern, full-featured sports equipment e-commerce website built with Next.js 1
 - **Product Details**: Comprehensive product pages with images and specifications
 - **Shopping Cart**: Add/remove items with smooth animations and persistent state
 - **Animated Cart Removal**: Smooth fade-out and slide-up animations when removing items
+- **Secure Checkout**: Integrated payment processing with ToyyibPay gateway
+- **Payment Tracking**: Real-time payment status with success/failure handling
 
 ### 🔐 Authentication & User Management
 
@@ -94,7 +96,7 @@ yarn dev
 ### First-Time Setup
 
 1. **Create an account** at `/auth`
-4. **Browse products** and test the shopping cart functionality
+2. **Browse products** and test the shopping cart functionality
 
 ## 🛒 Usage Guide
 
@@ -149,6 +151,35 @@ NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
 # ... other Firebase config
 ```
+
+### 💳 Payment Integration
+
+- **ToyyibPay Gateway**: Malaysian payment gateway integration
+- **Secure Payments**: Environment-based configuration for API keys
+- **Payment Status**: Real-time payment status checking and callbacks
+- **Success/Failure Pages**: Dedicated pages for payment outcomes
+- **Transaction Tracking**: Complete payment flow with order tracking
+
+## 🔧 Payment Setup
+
+To configure ToyyibPay payments:
+
+1. Register at [ToyyibPay Developer Portal](https://dev.toyyibpay.com/)
+2. Get your Secret Key and Category Code
+3. Update your `.env.local` file:
+
+```env
+TOYYIBPAY_SECRET_KEY=your_secret_key_here
+TOYYIBPAY_CATEGORY_CODE=your_category_code_here
+```
+
+### Payment Flow
+
+1. **Cart**: Users add items and proceed to checkout
+2. **Payment Creation**: API creates payment bill with ToyyibPay
+3. **Payment Page**: Users redirected to ToyyibPay payment page
+4. **Callback Handling**: Payment status updates handled via webhooks
+5. **Success/Failure**: Users redirected to appropriate result pages
 
 ## 🚀 Deployment
 

@@ -82,6 +82,13 @@ export default function Header() {
               </button>
               {isUserMenuOpen && (
                 <div className="absolute right-0 z-50 mt-2 w-48 rounded-md border border-gray-200 bg-white shadow-lg">
+                  <Link
+                    href="/orders"
+                    onClick={() => setIsUserMenuOpen(false)}
+                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    My Orders
+                  </Link>
                   <button
                     onClick={handleSignOut}
                     className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
@@ -116,6 +123,13 @@ export default function Header() {
               {isUserMenuOpen && (
                 <div className="absolute right-0 z-50 mt-2 w-48 rounded-md border border-gray-200 bg-white shadow-lg">
                   <div className="border-b px-4 py-2 text-sm text-gray-700">{user.email}</div>
+                  <Link
+                    href="/orders"
+                    onClick={() => setIsUserMenuOpen(false)}
+                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    My Orders
+                  </Link>
                   <button
                     onClick={handleSignOut}
                     className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
