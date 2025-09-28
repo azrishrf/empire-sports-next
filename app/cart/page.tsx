@@ -111,7 +111,7 @@ export default function CartPage() {
     { label: "Shopping Cart", href: "/cart" },
   ];
 
-  const handleQuantityChange = (id: number, size: string, change: number) => {
+  const handleQuantityChange = (id: string, size: string, change: number) => {
     const item = cartItems.find((item) => item.id === id && item.size === size);
     if (item) {
       const newQuantity = Math.max(1, item.quantity + change);
@@ -119,7 +119,7 @@ export default function CartPage() {
     }
   };
 
-  const handleRemoveItem = (id: number, size: string) => {
+  const handleRemoveItem = (id: string, size: string) => {
     const itemKey = `${id}-${size}`;
     setRemovingItems((prev) => new Set(prev).add(itemKey));
 

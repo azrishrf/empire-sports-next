@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 interface PaymentStatus {
   status: string;
@@ -12,7 +12,7 @@ interface PaymentStatus {
   transactionId?: string;
 }
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessContent() {
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
@@ -174,7 +174,7 @@ export default function PaymentSuccessPage() {
           )}
           {paymentStatus.amount && (
             <div className="flex justify-between">
-            <span className="text-gray-600">Amount:</span>
+              <span className="text-gray-600">Amount:</span>
               <span className="font-semibold">RM {(parseFloat(paymentStatus.amount) / 100).toFixed(2)}</span>
             </div>
           )}
@@ -196,5 +196,22 @@ export default function PaymentSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-gray-50">
+          <div className="rounded-lg bg-white p-8 text-center shadow-sm">
+            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600"></div>
+            <p className="mt-4 text-gray-600">Loading payment status...</p>
+          </div>
+        </div>
+      }
+    >
+      <PaymentSuccessContent />
+    </Suspense>
   );
 }

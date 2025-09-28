@@ -13,7 +13,7 @@ import {
 import { db } from "./firebase";
 
 export interface OrderItem {
-  id: number;
+  id: string;
   name: string;
   price: number;
   quantity: number;

@@ -7,7 +7,7 @@ import { createContext, ReactNode, useCallback, useContext, useEffect, useState 
 import Toastify from "toastify-js";
 
 export interface CartItem {
-  id: number;
+  id: string;
   name: string;
   image: string;
   category: string;
@@ -22,8 +22,8 @@ interface CartContextType {
   items: CartItem[];
   loading: boolean;
   addItem: (product: Product, size: string, quantity: number) => void;
-  removeItem: (id: number, size: string) => void;
-  updateQuantity: (id: number, size: string, quantity: number) => void;
+  removeItem: (id: string, size: string) => void;
+  updateQuantity: (id: string, size: string, quantity: number) => void;
   clearCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
@@ -134,11 +134,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const removeItem = (id: number, size: string) => {
+  const removeItem = (id: string, size: string) => {
     setItems((currentItems) => currentItems.filter((item) => !(item.id === id && item.size === size)));
   };
 
-  const updateQuantity = (id: number, size: string, quantity: number) => {
+  const updateQuantity = (id: string, size: string, quantity: number) => {
     if (quantity <= 0) {
       removeItem(id, size);
       return;

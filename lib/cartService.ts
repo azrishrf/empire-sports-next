@@ -133,7 +133,7 @@ export class CartService {
   }
 
   // Remove item from Firestore cart
-  static async removeItemFromCart(userId: string, itemId: number, size: string): Promise<void> {
+  static async removeItemFromCart(userId: string, itemId: string, size: string): Promise<void> {
     try {
       const cartRef = this.getCartDocRef(userId);
       const cartSnap = await getDoc(cartRef);
@@ -153,7 +153,7 @@ export class CartService {
   }
 
   // Update item quantity in Firestore cart
-  static async updateItemQuantity(userId: string, itemId: number, size: string, quantity: number): Promise<void> {
+  static async updateItemQuantity(userId: string, itemId: string, size: string, quantity: number): Promise<void> {
     try {
       if (quantity <= 0) {
         await this.removeItemFromCart(userId, itemId, size);

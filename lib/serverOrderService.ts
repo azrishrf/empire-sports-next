@@ -3,19 +3,40 @@ import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
 // Initialize Firebase Admin SDK
-if (!getApps().length) {
+function initializeFirebaseAdmin() {
+  if (getApps().length > 0) {
+    return getApps()[0];
+  }
+
+  const projectId = process.env.FIREBASE_PROJECT_ID;
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+
+  if (!projectId || !clientEmail || !privateKey) {
+    console.error("Missing Firebase Admin SDK environment variables");
+    console.error("Required: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY");
+    throw new Error("Firebase Admin SDK configuration is incomplete");
+  }
+
   try {
-    initializeApp({
+    console.log("Initializing Firebase Admin SDK...");
+    const app = initializeApp({
       credential: cert({
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+        projectId,
+        clientEmail,
+        privateKey,
       }),
     });
+    console.log("Firebase Admin SDK initialized successfully");
+    return app;
   } catch (error) {
     console.error("Failed to initialize Firebase Admin SDK:", error);
+    throw error;
   }
 }
+
+// Initialize Firebase Admin
+initializeFirebaseAdmin();
 
 const db = getFirestore();
 
