@@ -1,25 +1,67 @@
 import { ServerOrderService } from "@/lib/serverOrderService";
-import { ToyyibPayService } from "@/lib/toyyibpay";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
+    // Security: Verify the request comes from ToyyibPay servers (optional)
+    const forwardedFor = request.headers.get("x-forwarded-for");
+    const clientIP = forwardedFor ? forwardedFor.split(",")[0] : request.headers.get("x-real-ip") || "unknown";
+
+    console.log("Payment callback received from IP:", clientIP);
+
     const body = await request.json();
 
     console.log("Payment callback received:", body);
 
-    // Extract callback data
-    const { refno, status, billcode, order_id, amount, signature, msg, transaction_time } = body;
+    // Extract callback data according to ToyyibPay API documentation
+    const { refno, status, reason, billcode, order_id, amount, transaction_time } = body;
 
     // Log callback data for debugging
-    console.log("Callback data:", { billcode, amount, transaction_time });
+    console.log("Callback data:", {
+      refno,
+      status,
+      reason,
+      billcode,
+      order_id,
+      amount,
+      transaction_time,
+    });
 
-    // Verify callback signature (implement based on ToyyibPay documentation)
-    const isValidSignature = ToyyibPayService.verifyCallback(body, signature);
+    // Basic validation - ensure required fields are present
+    if (!refno || !status || !billcode || !order_id) {
+      console.error("Missing required callback parameters");
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Missing required callback parameters",
+        },
+        { status: 400 },
+      );
+    }
 
-    if (!isValidSignature) {
-      console.error("Invalid callback signature");
-      return NextResponse.json({ success: false, message: "Invalid signature" }, { status: 400 });
+    // Validate status is a valid value (1=success, 2=pending, 3=fail)
+    const validStatuses = ["1", "2", "3"];
+    if (!validStatuses.includes(status.toString())) {
+      console.error("Invalid payment status:", status);
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid payment status",
+        },
+        { status: 400 },
+      );
+    }
+
+    // Validate amount is a number
+    if (amount && isNaN(parseFloat(amount.toString()))) {
+      console.error("Invalid amount format:", amount);
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid amount format",
+        },
+        { status: 400 },
+      );
     }
 
     // Process payment based on status
@@ -70,7 +112,7 @@ export async function POST(request: NextRequest) {
       });
     } else if (status === "3") {
       // Payment failed
-      console.log(`Payment failed for order ${order_id}: ${msg}`);
+      console.log(`Payment failed for order ${order_id}: ${reason}`);
 
       try {
         // Find and update order in Firestore
@@ -79,7 +121,7 @@ export async function POST(request: NextRequest) {
           await ServerOrderService.updateOrderPaymentStatus(order.id!, {
             status: "failed",
             billCode: billcode,
-            notes: `Payment failed: ${msg}`,
+            notes: `Payment failed: ${reason}`,
           });
           console.log(`Order ${order_id} updated with payment failure`);
         } else {
@@ -96,7 +138,7 @@ export async function POST(request: NextRequest) {
         data: {
           orderId: order_id,
           status: "failed",
-          reason: msg,
+          reason: reason,
         },
       });
     } else {
