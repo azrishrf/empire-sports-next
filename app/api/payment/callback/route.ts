@@ -10,6 +10,7 @@ export async function POST(request: NextRequest) {
     console.log("Payment callback received from IP:", clientIP);
 
     const contentType = request.headers.get("content-type") || "";
+    console.log("Content-Type:", contentType);
     let payload: Record<string, string> = {};
 
     if (contentType.includes("application/json")) {
@@ -18,17 +19,49 @@ export async function POST(request: NextRequest) {
         Object.entries(body).map(([key, value]) => [key, typeof value === "string" ? value : String(value ?? "")]),
       );
     } else if (contentType.includes("application/x-www-form-urlencoded")) {
+      console.log("Processing application/x-www-form-urlencoded");
       const formData = await request.formData();
+      console.log("FormData entries:");
+      for (const [key, value] of formData.entries()) {
+        console.log(`  ${key}: ${value}`);
+      }
+      payload = Object.fromEntries(Array.from(formData.entries()).map(([key, value]) => [key, value.toString()]));
+    } else if (contentType.includes("multipart/form-data")) {
+      console.log("Processing multipart/form-data");
+      const formData = await request.formData();
+      console.log("FormData entries:");
+      for (const [key, value] of formData.entries()) {
+        console.log(`  ${key}: ${value}`);
+      }
       payload = Object.fromEntries(Array.from(formData.entries()).map(([key, value]) => [key, value.toString()]));
     } else {
       // Fallback: attempt to parse as URL-encoded query string
+      console.log("Using fallback parsing for content-type:", contentType);
       const rawText = await request.text();
+      console.log("Raw text length:", rawText.length);
+      console.log("Raw text preview:", rawText.substring(0, 500));
+
       if (rawText) {
-        payload = Object.fromEntries(new URLSearchParams(rawText));
+        // Try URL-encoded parsing first
+        try {
+          payload = Object.fromEntries(new URLSearchParams(rawText));
+          console.log("URL-encoded parsing successful");
+        } catch {
+          console.log("URL-encoded parsing failed, trying manual parsing");
+          // Manual parsing for key=value pairs separated by &
+          const pairs = rawText.split("&");
+          for (const pair of pairs) {
+            const [key, value] = pair.split("=");
+            if (key && value !== undefined) {
+              payload[decodeURIComponent(key)] = decodeURIComponent(value);
+            }
+          }
+        }
       }
     }
 
     console.log("Payment callback received:", payload);
+    console.log("Payload keys:", Object.keys(payload));
 
     // Extract callback data according to ToyyibPay API documentation
     const { refno, status, reason, billcode, order_id, amount, transaction_time } = payload;
