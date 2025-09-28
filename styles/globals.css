@@ -24,6 +24,41 @@ body {
 }
 
 .container {
-  @apply mx-auto px-4 py-10 max-w-[1200px];
+  @apply mx-auto max-w-[1200px] px-4 py-10;
 }
 
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Cart item removal animation */
+.cart-item-removing {
+  animation: slideUpFadeOut 0.3s ease-in-out forwards;
+  transform-origin: top;
+}
+
+@keyframes slideUpFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 200px;
+    margin-bottom: 0;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  50% {
+    opacity: 0.3;
+    transform: translateY(-10px) scale(0.98);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

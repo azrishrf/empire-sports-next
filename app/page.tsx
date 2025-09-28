@@ -1,5 +1,3 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import FadeSlideShow from "@/components/Home/FadeSlideShow";
 import Promotion from "@/components/Home/Promotion";
 import Reviews from "@/components/Home/Reviews";
@@ -10,8 +8,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <Header />
+    <main>
       <Promotion />
       <TopBanner />
       <TopPicks />
@@ -27,7 +24,6 @@ export default function Home() {
           className="mx-auto block h-auto max-w-full"
         />
       </section>
-      <Footer />
     </main>
   );
 }

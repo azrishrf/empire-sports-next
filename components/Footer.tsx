@@ -4,11 +4,11 @@ import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 
 const categoryLinks = [
-  { href: "/category-running", label: "Running" },
-  { href: "/category-sneakers", label: "Sneakers" },
-  { href: "/category-clothing", label: "Clothing" },
-  { href: "/category-sandals", label: "Sandals" },
-  { href: "/category-basketball", label: "Basketball" },
+  { href: "/collections/running", label: "Running" },
+  { href: "/collections/sneakers", label: "Sneakers" },
+  { href: "/collections/clothing", label: "Clothing" },
+  { href: "/collections/sandals", label: "Sandals" },
+  { href: "/collections/basketball", label: "Basketball" },
 ];
 
 const accountItems = ["My Account", "Checkout", "Wishlist", "Orders Tracking", "FAQ"];

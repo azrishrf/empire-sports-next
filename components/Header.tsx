@@ -1,22 +1,47 @@
 "use client";
 
+import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { HiMenu, HiX } from "react-icons/hi";
 import { IoPerson } from "react-icons/io5";
+import Toastify from "toastify-js";
 
 const navItems = [
-  { href: "/category-running", label: "RUNNING" },
-  { href: "/category-sneakers", label: "SNEAKERS" },
-  { href: "/category-clothing", label: "CLOTHING" },
-  { href: "/category-sandals", label: "SANDALS" },
-  { href: "/category-basketball", label: "BASKETBALL" },
+  { href: "/collections/running", label: "RUNNING" },
+  { href: "/collections/sneakers", label: "SNEAKERS" },
+  { href: "/collections/clothing", label: "CLOTHING" },
+  { href: "/collections/sandals", label: "SANDALS" },
+  { href: "/collections/basketball", label: "BASKETBALL" },
 ];
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const { getTotalItems } = useCart();
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setIsUserMenuOpen(false);
+      Toastify({
+        text: "Successfully signed out!",
+        duration: 3000,
+        backgroundColor: "#10B981",
+        close: true,
+      }).showToast();
+    } catch (error) {
+      Toastify({
+        text: "Error signing out",
+        duration: 3000,
+        backgroundColor: "#EF4444",
+      }).showToast();
+    }
+  };
 
   return (
     <>
@@ -46,36 +71,84 @@ export default function Header() {
 
         {/* Desktop Actions - Hidden on mobile */}
         <div className="hidden items-center space-x-4 md:flex">
-          <Link href="/login" className="text-black">
-            <IoPerson size={20} />
-          </Link>
-          <Link href="/shopping-cart">
+          {user ? (
+            <div className="relative">
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center space-x-2 text-black hover:text-gray-600"
+              >
+                <IoPerson size={20} />
+                <span className="text-sm">{user.email}</span>
+              </button>
+              {isUserMenuOpen && (
+                <div className="absolute right-0 z-50 mt-2 w-48 rounded-md border border-gray-200 bg-white shadow-lg">
+                  <button
+                    onClick={handleSignOut}
+                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link href="/auth" className="text-black hover:text-gray-600">
+              <IoPerson size={20} />
+            </Link>
+          )}
+          <Link href="/cart" className="relative">
             <FaCartShopping className="cursor-pointer text-lg text-black transition-colors duration-500 hover:text-blue-900 lg:text-xl" />
+            {getTotalItems() > 0 && (
+              <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                {getTotalItems()}
+              </span>
+            )}
           </Link>
         </div>
 
         {/* Mobile Actions - Only visible on mobile */}
         <div className="flex items-center space-x-3 md:hidden">
-          <Link href="/login" className="text-black">
-            <IoPerson size={20} />
-          </Link>
-          <Link href="/shopping-cart">
+          {user ? (
+            <div className="relative">
+              <button onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} className="text-black">
+                <IoPerson size={20} />
+              </button>
+              {isUserMenuOpen && (
+                <div className="absolute right-0 z-50 mt-2 w-48 rounded-md border border-gray-200 bg-white shadow-lg">
+                  <div className="border-b px-4 py-2 text-sm text-gray-700">{user.email}</div>
+                  <button
+                    onClick={handleSignOut}
+                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link href="/auth" className="text-black">
+              <IoPerson size={20} />
+            </Link>
+          )}
+          <Link href="/cart" className="relative">
             <FaCartShopping className="cursor-pointer text-lg text-black" />
+            {getTotalItems() > 0 && (
+              <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                {getTotalItems()}
+              </span>
+            )}
           </Link>
         </div>
       </header>
 
       {/* Desktop Navigation */}
       <nav className="hidden bg-[#283071] md:block">
-        <ul className="mx-auto flex w-full list-none flex-row items-center justify-center max-w-[1100px]">
+        <ul className="mx-auto flex w-full max-w-[1100px] list-none flex-row items-center justify-center">
           {navItems.map((item) => (
-            <li
-              key={item.href}
-              className="flex-1 py-2.5 text-xs text-white transition-all duration-200 hover:bg-red-900"
-            >
+            <li key={item.href} className="flex-1 text-xs text-white transition-all duration-200 hover:bg-red-900">
               <Link
                 href={item.href}
-                className="flex w-full justify-center rounded font-medium text-white no-underline transition-all duration-300"
+                className="flex w-full justify-center rounded py-2.5 font-medium text-white no-underline transition-all duration-300"
               >
                 {item.label}
               </Link>
