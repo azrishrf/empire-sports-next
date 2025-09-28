@@ -9,12 +9,29 @@ export async function POST(request: NextRequest) {
 
     console.log("Payment callback received from IP:", clientIP);
 
-    const body = await request.json();
+    const contentType = request.headers.get("content-type") || "";
+    let payload: Record<string, string> = {};
 
-    console.log("Payment callback received:", body);
+    if (contentType.includes("application/json")) {
+      const body = await request.json();
+      payload = Object.fromEntries(
+        Object.entries(body).map(([key, value]) => [key, typeof value === "string" ? value : String(value ?? "")]),
+      );
+    } else if (contentType.includes("application/x-www-form-urlencoded")) {
+      const formData = await request.formData();
+      payload = Object.fromEntries(Array.from(formData.entries()).map(([key, value]) => [key, value.toString()]));
+    } else {
+      // Fallback: attempt to parse as URL-encoded query string
+      const rawText = await request.text();
+      if (rawText) {
+        payload = Object.fromEntries(new URLSearchParams(rawText));
+      }
+    }
+
+    console.log("Payment callback received:", payload);
 
     // Extract callback data according to ToyyibPay API documentation
-    const { refno, status, reason, billcode, order_id, amount, transaction_time } = body;
+    const { refno, status, reason, billcode, order_id, amount, transaction_time } = payload;
 
     // Log callback data for debugging
     console.log("Callback data:", {
