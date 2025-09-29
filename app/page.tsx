@@ -1,29 +1,19 @@
-import FadeSlideShow from "@/components/Home/FadeSlideShow";
-import Promotion from "@/components/Home/Promotion";
-import Reviews from "@/components/Home/Reviews";
-import Services from "@/components/Home/Services";
-import TopBanner from "@/components/Home/TopBanner";
-import TopPicks from "@/components/Home/TopPicks";
-import Image from "next/image";
+import ElevateGameSection from "@/components/Home/ElevateGameSection";
+import FeaturedSections from "@/components/Home/FeaturedSections";
+import NewHeroSection from "@/components/Home/HeroSection";
+import NewTestimonials from "@/components/Home/Testimonials";
+import ShopByCategory from "@/components/Home/ShopByCategory";
+import TopTrending from "@/components/Home/TopTrending";
 
 export default function Home() {
   return (
-    <main>
-      <Promotion />
-      <TopBanner />
-      <TopPicks />
-      <Services />
-      <FadeSlideShow />
-      <Reviews />
-      <section className="my-12">
-        <Image
-          src="/images/brand.png"
-          alt="Brands"
-          width={1200}
-          height={400}
-          className="mx-auto block h-auto max-w-full"
-        />
-      </section>
+    <main className="overflow-hidden">
+      <NewHeroSection />
+      <FeaturedSections />
+      <TopTrending />
+      <ElevateGameSection />
+      <NewTestimonials />
+      <ShopByCategory />
     </main>
   );
 }

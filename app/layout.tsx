@@ -5,13 +5,21 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Syne } from "next/font/google";
 import "toastify-js/src/toastify.css";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-poppins",
+});
+
+const syne = Syne({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-syne",
 });
 
 export const metadata: Metadata = {
@@ -22,7 +30,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`min-h-screen ${poppins.className}`}>
+      <body className={`min-h-screen ${poppins.variable} ${syne.variable}`}>
         <AuthProvider>
           <CartProvider>
             <AOSProvider>

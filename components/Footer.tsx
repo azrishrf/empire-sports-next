@@ -38,78 +38,159 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <div className="bg-zinc-900">
-      <footer className="mx-auto max-w-[1300px] border-b-2 border-zinc-800 px-6 py-6 text-xs">
-        <div className="flex flex-col justify-around gap-8 font-medium md:flex-row">
+    <div className="bg-neutral-900">
+      <footer className="mx-auto max-w-7xl px-6 py-16 text-sm" style={{ fontFamily: "var(--font-poppins)" }}>
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Shop Info */}
-          <div className="rounded-3xl bg-white px-4 py-5 md:w-2/5">
-            <Link href="/" className="mb-4 block">
-              <Image src="/images/logo.jpg" alt="Logo business" width={90} height={50} />
+          <div className="lg:col-span-2">
+            <Link href="/" className="mb-6 block">
+              <Image src="/images/logo.jpg" alt="Logo business" width={120} height={60} className="h-12 w-auto" />
             </Link>
-            <p className="mb-3">
-              <FaPhone className="mr-2 inline"></FaPhone>+60156721632
+            <p className="mb-6 max-w-md leading-relaxed text-gray-300">
+              Empire Sports is your premier destination for high-quality sports equipment and apparel. We&apos;re
+              dedicated to helping athletes at every level reach their potential.
             </p>
-            <p className="mb-3">
-              <FaLocationDot className="mr-2 inline"></FaLocationDot>
-              Lot 23, SU 3, Saujana Utama, 47000 Sungai Buloh, Selangor
-            </p>
-            <p className="mb-3">
-              <MdEmail className="mr-2 inline"></MdEmail>empiresports@gmail.com
-            </p>
-          </div>
-
-          <div className="flex gap-10 md:w-2/5 md:justify-around">
-            {/* Categories */}
-            <div className="text-white">
-              <h3 className="pb-5 text-base font-semibold">CATEGORIES</h3>
-              <ul className="list-none space-y-2">
-                {categoryLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="text-white no-underline transition-colors hover:text-blue-400">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Account */}
-            <div className="text-white">
-              <h3 className="pb-5 text-base font-semibold">ACCOUNT</h3>
-              <ul className="list-none space-y-2">
-                {accountItems.map((item) => (
-                  <li key={item} className="cursor-pointer text-white transition-colors hover:text-blue-400">
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <div className="space-y-3 text-gray-300">
+              <p className="flex items-center">
+                <FaPhone className="text-primary-green mr-3" />
+                +60156721632
+              </p>
+              <p className="flex items-center">
+                <FaLocationDot className="text-primary-green mr-3" />
+                Lot 23, SU 3, Saujana Utama, 47000 Sungai Buloh, Selangor
+              </p>
+              <p className="flex items-center">
+                <MdEmail className="text-primary-green mr-3" />
+                empiresports@gmail.com
+              </p>
             </div>
           </div>
 
-          {/* Follow Us */}
-          <div className="md:w-1/5">
-            <h3 className="pb-5 text-base font-semibold text-white">FOLLOW US</h3>
-            <div className="flex gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.alt}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-transform duration-300 hover:scale-110"
-                >
-                  <Image src={social.icon} width={32} height={32} alt={social.alt} />
-                </a>
+          {/* Categories */}
+          <div>
+            <h3 className="mb-6 text-lg font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>
+              Our Store
+            </h3>
+            <ul className="space-y-3">
+              {categoryLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="hover:text-primary-green inline-block text-gray-300 transition-colors duration-300 hover:translate-x-1"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Customer Support */}
+          <div>
+            <h3 className="mb-6 text-lg font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>
+              Customer Support
+            </h3>
+            <ul className="space-y-3">
+              {accountItems.map((item) => (
+                <li key={item}>
+                  <a
+                    href="#"
+                    className="hover:text-primary-green inline-block text-gray-300 transition-colors duration-300 hover:translate-x-1"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* About Us */}
+          <div>
+            <h3 className="mb-6 text-lg font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>
+              About Us
+            </h3>
+            <ul className="space-y-3 text-gray-300">
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-primary-green inline-block transition-colors duration-300 hover:translate-x-1"
+                >
+                  Our Story
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-primary-green inline-block transition-colors duration-300 hover:translate-x-1"
+                >
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-primary-green inline-block transition-colors duration-300 hover:translate-x-1"
+                >
+                  Press
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="hover:text-primary-green inline-block transition-colors duration-300 hover:translate-x-1"
+                >
+                  News
+                </a>
+              </li>
+            </ul>
+
+            {/* Social Links */}
+            <div className="mt-8">
+              <h4 className="mb-4 text-sm font-semibold text-white">Follow Us</h4>
+              <div className="flex gap-4">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.alt}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative"
+                  >
+                    <div className="group-hover:bg-primary-green flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 transition-all duration-300 group-hover:scale-110">
+                      <Image
+                        src={social.icon}
+                        width={20}
+                        height={20}
+                        alt={social.alt}
+                        className="transition-all duration-300 group-hover:brightness-0"
+                      />
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="mt-12 border-t border-gray-800 pt-8">
+          <div className="flex flex-col items-center justify-between md:flex-row">
+            <p className="mb-4 text-sm text-gray-400 md:mb-0">© 2025 Empire Sports. All rights reserved.</p>
+
+            <div className="flex gap-6 text-sm text-gray-400">
+              <a href="#" className="hover:text-primary-green transition-colors duration-300">
+                Privacy Policy
+              </a>
+              <a href="#" className="hover:text-primary-green transition-colors duration-300">
+                Terms of Service
+              </a>
+              <a href="#" className="hover:text-primary-green transition-colors duration-300">
+                Cookie Policy
+              </a>
             </div>
           </div>
         </div>
       </footer>
-
-      {/* Copyright */}
-      <div className="py-2.5 text-center text-xs text-white">
-        <p>Copyright © 2022 Empire Sports. All rights reserved.</p>
-      </div>
     </div>
   );
 }

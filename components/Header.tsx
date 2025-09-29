@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
@@ -44,14 +44,17 @@ export default function Header() {
   };
 
   return (
-    <>
+    <div className="bg-[#13160B]">
       {/* Header */}
-      <header className="relative flex items-center justify-between p-4 md:mx-auto md:max-w-[1400px] md:py-2">
+      <header
+        className="relative flex items-center justify-between p-4 backdrop-blur-sm md:mx-auto md:max-w-[1400px] md:py-2"
+        style={{ fontFamily: "var(--font-poppins)" }}
+      >
         {/* Mobile Menu Button - Only visible on mobile */}
         <div className="md:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="cursor-pointer text-black transition-colors duration-300 hover:text-gray-900"
+            className="cursor-pointer text-white transition-colors duration-300 hover:text-gray-300"
             aria-label="Toggle navigation menu"
           >
             <HiMenu size={20} />
@@ -69,19 +72,38 @@ export default function Header() {
           />
         </Link>
 
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 transform lg:block">
+          <ul className="flex list-none flex-row items-center justify-center space-x-">
+            {navItems.map((item) => (
+              <li
+                key={item.href}
+                className="hover:bg-primary-green/20 rounded text-xs text-white transition-all duration-200"
+              >
+                <Link
+                  href={item.href}
+                  className="hover:text-primary-green block px-10 py-2.5 font-medium text-white no-underline transition-all duration-300"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
         {/* Desktop Actions - Hidden on mobile */}
         <div className="hidden items-center space-x-4 md:flex">
           {user ? (
             <div className="relative">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center space-x-2 text-black hover:text-gray-600"
+                className="flex cursor-pointer items-center space-x-2 text-white hover:text-gray-300"
               >
                 <IoPerson size={20} />
-                <span className="text-sm">{user.email}</span>
+                <span className="text-sm">{user.displayName}</span>
               </button>
               {isUserMenuOpen && (
-                <div className="absolute right-0 z-50 mt-2 w-48 rounded-md border border-gray-200 bg-white shadow-lg">
+                <div className="absolute right-0 z-50 mt-4 w-48 rounded-md border border-gray-200 bg-white shadow-lg">
                   <Link
                     href="/orders"
                     onClick={() => setIsUserMenuOpen(false)}
@@ -91,7 +113,7 @@ export default function Header() {
                   </Link>
                   <button
                     onClick={handleSignOut}
-                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                    className="block w-full cursor-pointer px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Sign Out
                   </button>
@@ -99,12 +121,12 @@ export default function Header() {
               )}
             </div>
           ) : (
-            <Link href="/auth" className="text-black hover:text-gray-600">
+            <Link href="/auth" className="text-white hover:text-gray-300">
               <IoPerson size={20} />
             </Link>
           )}
           <Link href="/cart" className="relative">
-            <FaCartShopping className="cursor-pointer text-lg text-black transition-colors duration-500 hover:text-blue-900 lg:text-xl" />
+            <FaCartShopping className="hover:text-primary-green cursor-pointer text-lg text-white transition-colors duration-500 lg:text-xl" />
             {getTotalItems() > 0 && (
               <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                 {getTotalItems()}
@@ -117,7 +139,7 @@ export default function Header() {
         <div className="flex items-center space-x-3 md:hidden">
           {user ? (
             <div className="relative">
-              <button onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} className="text-black">
+              <button onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} className="text-white">
                 <IoPerson size={20} />
               </button>
               {isUserMenuOpen && (
@@ -140,12 +162,12 @@ export default function Header() {
               )}
             </div>
           ) : (
-            <Link href="/auth" className="text-black">
+            <Link href="/auth" className="text-white">
               <IoPerson size={20} />
             </Link>
           )}
           <Link href="/cart" className="relative">
-            <FaCartShopping className="cursor-pointer text-lg text-black" />
+            <FaCartShopping className="cursor-pointer text-lg text-white" />
             {getTotalItems() > 0 && (
               <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                 {getTotalItems()}
@@ -156,20 +178,24 @@ export default function Header() {
       </header>
 
       {/* Desktop Navigation */}
-      <nav className="hidden bg-[#283071] md:block">
+      {/* <nav className="hidden md:block">
         <ul className="mx-auto flex w-full max-w-[1100px] list-none flex-row items-center justify-center">
           {navItems.map((item) => (
-            <li key={item.href} className="flex-1 text-xs text-white transition-all duration-200 hover:bg-red-900">
+            <li
+              key={item.href}
+              className="hover:bg-primary-green/20 flex-1 text-xs text-white transition-all duration-200"
+            >
               <Link
                 href={item.href}
-                className="flex w-full justify-center rounded py-2.5 font-medium text-white no-underline transition-all duration-300"
+                className="hover:text-primary-green flex w-full justify-center rounded py-2.5 font-medium text-white no-underline transition-all duration-300"
+                style={{ fontFamily: "var(--font-poppins)" }}
               >
                 {item.label}
               </Link>
             </li>
           ))}
         </ul>
-      </nav>
+      </nav> */}
 
       {/* Mobile Sidebar Overlay */}
       <div
@@ -213,6 +239,6 @@ export default function Header() {
           </ul>
         </nav>
       </div>
-    </>
+    </div>
   );
 }
