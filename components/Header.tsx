@@ -64,11 +64,11 @@ export default function Header() {
         {/* Logo  */}
         <Link href="/" className="mr-auto flex-shrink-0">
           <Image
-            src="/images/logo.jpg"
+            src="/logo.png"
             alt="Logo business"
             width={90}
             height={50}
-            className="h-9 w-16 md:h-auto md:w-20"
+            className="w-12 md:h-auto md:w-12"
           />
         </Link>
 
