@@ -2,6 +2,7 @@
 
 import AOS from "aos";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import { TiTick } from "react-icons/ti";
 
@@ -90,10 +91,10 @@ export default function ElevateGameSection() {
             </div>
 
             {/* CTA Buttons */}
-            {/* <div className="flex flex-wrap gap-4 pt-6">
+            <div className="flex flex-wrap gap-4 pt-6">
               <Link
                 href="/collections"
-                className="inline-flex transform items-center rounded-full bg-primary-green px-8 py-4 text-lg font-semibold text-black transition-all duration-300 hover:scale-105 hover:bg-[#b8e600] hover:shadow-xl"
+                className="bg-primary-green inline-flex transform items-center rounded-full px-8 py-4 text-lg font-semibold text-black transition-all duration-300 hover:scale-105 hover:bg-[#b8e600] hover:shadow-xl"
                 style={{ fontFamily: "var(--font-poppins)" }}
               >
                 Shop Collection
@@ -101,15 +102,7 @@ export default function ElevateGameSection() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
-
-              <Link
-                href="/collections"
-                className="inline-flex items-center rounded-full border-2 border-gray-300 px-8 py-4 text-lg font-semibold text-gray-700 transition-all duration-300 hover:border-primary-green hover:text-primary-green"
-                style={{ fontFamily: "var(--font-poppins)" }}
-              >
-                Learn More
-              </Link>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

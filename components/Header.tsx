@@ -44,10 +44,10 @@ export default function Header() {
   };
 
   return (
-    <div className="bg-[#13160B]">
+    <div className="sticky top-0 z-50 bg-black">
       {/* Header */}
       <header
-        className="relative flex items-center justify-between p-4 backdrop-blur-sm md:mx-auto md:max-w-[1400px] md:py-2"
+        className="relative flex items-center justify-between px-4 py-1 backdrop-blur-sm md:mx-auto md:max-w-[1400px] md:p-4 md:py-2"
         style={{ fontFamily: "var(--font-poppins)" }}
       >
         {/* Mobile Menu Button - Only visible on mobile */}
@@ -57,23 +57,17 @@ export default function Header() {
             className="cursor-pointer text-white transition-colors duration-300 hover:text-gray-300"
             aria-label="Toggle navigation menu"
           >
-            <HiMenu size={20} />
+            <HiMenu size={25} />
           </button>
         </div>
 
         {/* Logo  */}
         <Link href="/" className="mr-auto flex-shrink-0">
-          <Image
-            src="/logo.png"
-            alt="Logo business"
-            width={90}
-            height={50}
-            className="w-12 md:h-auto md:w-12"
-          />
+          <Image src="/logo.png" alt="Logo business" width={90} height={50} className="w-12 md:h-auto md:w-12" />
         </Link>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 transform lg:block">
-          <ul className="flex list-none flex-row items-center justify-center space-x-">
+          <ul className="space-x- flex list-none flex-row items-center justify-center">
             {navItems.map((item) => (
               <li
                 key={item.href}
