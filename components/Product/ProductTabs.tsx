@@ -11,9 +11,9 @@ interface ProductTabsProps {
 }
 
 export default function ProductTabs({ product }: ProductTabsProps) {
-  const [activeTab, setActiveTab] = useState("DESCRIPTION");
+  const [activeTab, setActiveTab] = useState("Description");
 
-  const tabs = ["DESCRIPTION", "DETAILS", "REVIEW"];
+  const tabs = ["Description", "Details", "Review"];
   const currentTabIndex = tabs.indexOf(activeTab);
 
   const navigateTab = (direction: "prev" | "next") => {
@@ -36,9 +36,9 @@ export default function ProductTabs({ product }: ProductTabsProps) {
       {/* Desktop Tab Navigation */}
       <div className="hidden space-x-6 text-lg md:flex" style={{ fontFamily: "var(--font-syne)" }}>
         <button
-          onClick={() => handleTabClick("DESCRIPTION")}
+          onClick={() => handleTabClick("Description")}
           className={`rounded-full px-6 py-3 font-medium ${
-            activeTab === "DESCRIPTION"
+            activeTab === "Description"
               ? "bg-primary-green text-black"
               : "cursor-pointer bg-gray-200 text-gray-500 transition-colors hover:bg-gray-300"
           }`}
@@ -46,9 +46,9 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           Description
         </button>
         <button
-          onClick={() => handleTabClick("DETAILS")}
+          onClick={() => handleTabClick("Details")}
           className={`rounded-full px-6 py-3 font-medium ${
-            activeTab === "DETAILS"
+            activeTab === "Details"
               ? "bg-primary-green text-black"
               : "cursor-pointer bg-gray-200 text-gray-500 transition-colors hover:bg-gray-300"
           }`}
@@ -56,9 +56,9 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           Details
         </button>
         <button
-          onClick={() => handleTabClick("REVIEW")}
+          onClick={() => handleTabClick("Review")}
           className={`rounded-full px-6 py-3 font-medium ${
-            activeTab === "REVIEW"
+            activeTab === "Review"
               ? "bg-primary-green text-black"
               : "cursor-pointer bg-gray-200 text-gray-500 transition-colors hover:bg-gray-300"
           }`}
@@ -82,7 +82,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
             <MdArrowCircleLeft size={30} />
           </button>
 
-          <div className="rounded-xl bg-red-800 px-6 py-3 text-center text-sm font-medium text-white">{activeTab}</div>
+          <div className="rounded-2xl bg-primary-green px-6 py-3 text-center text-sm font-medium text-black">{activeTab}</div>
 
           <button
             onClick={() => navigateTab("next")}
@@ -100,14 +100,14 @@ export default function ProductTabs({ product }: ProductTabsProps) {
 
       {/* Tab Content */}
       <div className="mt-4 rounded-lg border border-gray-200 bg-white p-6">
-        {activeTab === "DESCRIPTION" && (
+        {activeTab === "Description" && (
           <div data-aos="fade" data-aos-duration="400" data-aos-once="false" key="description">
             {/* <h4 className="mb-3 font-bold text-gray-900">Description</h4> */}
             <p className="text-sm leading-relaxed text-gray-700">{product.description}</p>
           </div>
         )}
 
-        {activeTab === "DETAILS" && (
+        {activeTab === "Details" && (
           <div data-aos="fade" data-aos-duration="400" data-aos-once="false" key="details">
             {/* <h4 className="mb-3 font-bold text-gray-900">Product Details</h4> */}
             <table className="w-full border-separate border-spacing-y-5 text-sm text-gray-700">
@@ -141,7 +141,7 @@ export default function ProductTabs({ product }: ProductTabsProps) {
           </div>
         )}
 
-        {activeTab === "REVIEW" && (
+        {activeTab === "Review" && (
           <div data-aos="fade" data-aos-duration="400" data-aos-once="false" key="review">
             <ProductReviews product={product} />
           </div>

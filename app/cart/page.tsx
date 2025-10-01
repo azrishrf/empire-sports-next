@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PropagateLoader } from "react-spinners";
 
 export default function CartPage() {
   const { items: cartItems, loading, updateQuantity, removeItem } = useCart();
@@ -143,10 +144,15 @@ export default function CartPage() {
     return (
       <div className="min-h-screen bg-gray-50">
         <Breadcrumb items={breadcrumbItems} />
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex min-h-64 items-center justify-center">
-            <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-gray-600">Loading your cart...</span>
+        <div className="flex h-64 items-center justify-center">
+          <div className="text-center">
+            <PropagateLoader
+              color="var(--color-primary-green)"
+              loading={loading}
+              size={15}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
           </div>
         </div>
       </div>
@@ -161,7 +167,7 @@ export default function CartPage() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Cart Items Section */}
           <div className="lg:col-span-2">
-            <div className="cart-container rounded-lg bg-white shadow-sm">
+            <div className="cart-container rounded-lg border border-gray-200 bg-white">
               {/* Header */}
               <div className="grid grid-cols-12 gap-4 border-b border-gray-200 p-6 text-sm font-semibold tracking-wide text-gray-700 uppercase">
                 <div className="col-span-5">PRODUCT</div>

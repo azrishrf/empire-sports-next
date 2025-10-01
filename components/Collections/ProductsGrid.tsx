@@ -63,7 +63,7 @@ export default function ProductsGrid({
   }
 
   return (
-    <div key={animationKey} className={`grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`}>
+    <div key={animationKey} className={`lg:grid-cols- grid grid-cols-2 gap-6 md:grid-cols-4 xl:grid-cols-4`}>
       {filteredProducts.slice(0, showItems).map((product, index) => (
         <Link
           key={`${product.id}-${animationKey}`}
@@ -106,14 +106,14 @@ export default function ProductsGrid({
               >
                 {product.name}
               </h3>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col justify-between md:flex-row md:items-center">
                 <span className="text-lg font-semibold text-gray-900">{product.price}</span>
 
-                {product.availability === "IN STOCK" && (
+                {/* {product.availability === "IN STOCK" && (
                   <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
                     In Stock
                   </span>
-                )}
+                )} */}
               </div>
               {/* {product.brand && <p className="mt-1 text-xs text-gray-500">{product.brand}</p>} */}
             </div>

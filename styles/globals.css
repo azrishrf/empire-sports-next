@@ -8,9 +8,9 @@
   --font-poppins: "Poppins", sans-serif;
 }
 
-@theme  {
+@theme {
   --color-primary-green: #c6ff00;
-  --color-dark-green: #BAF120;
+  --color-dark-green: #baf120;
   --color-dark-bg: #1a1a1a;
   --color-card-bg: #2a2a2a;
 }
@@ -30,12 +30,64 @@ body {
   }
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutScale {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
 .fade {
   animation: fade 1.5s ease-in-out;
 }
 
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.5s ease-out;
+}
+
+.animate-fade-out-scale {
+  animation: fadeOutScale 0.3s ease-in-out;
+}
+
 .container {
-  @apply mx-auto max-w-[1200px] px-4 py-10;
+  @apply mx-auto max-w-[1400px] px-4 py-10;
 }
 
 .line-clamp-2 {
