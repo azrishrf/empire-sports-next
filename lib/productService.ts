@@ -114,16 +114,78 @@ export class ProductService {
   }
 
   /**
-   * Get featured/top picks products
+   * Get featured/top picks products based on sales data from orders
    */
   static async getFeaturedProducts(limit: number = 8): Promise<Product[]> {
     try {
+      // Get only confirmed orders to calculate sales data
+      const ordersCollection = collection(db, "orders");
+      const confirmedOrdersQuery = query(ordersCollection, where("status", "==", "confirmed"));
+      const ordersSnapshot = await getDocs(confirmedOrdersQuery);
+
+      // Count sales for each product
+      const productSalesCount: { [productId: string]: number } = {};
+
+      ordersSnapshot.forEach((doc) => {
+        const orderData = doc.data();
+        // Assuming orders have an 'items' array with productId and quantity
+        if (orderData.items && Array.isArray(orderData.items)) {
+          orderData.items.forEach((item: { productId?: string; id?: string; quantity?: number }) => {
+            const productId = item.productId || item.id;
+            const quantity = item.quantity || 1;
+
+            if (productId) {
+              productSalesCount[productId] = (productSalesCount[productId] || 0) + quantity;
+            }
+          });
+        }
+      });
+
+      // Get all products
       const allProducts = await this.getAllProducts();
-      // For now, just return random products. You might want to add a "featured" field later
-      return allProducts.slice(0, limit);
+
+      // Add sales count to products and sort by sales
+      const productsWithSales = allProducts.map((product) => ({
+        ...product,
+        salesCount: productSalesCount[product.id] || 0,
+      }));
+
+      // Sort by sales count (highest first) and take the top products
+      const topSellingProducts = productsWithSales
+        .sort((a, b) => b.salesCount - a.salesCount)
+        .slice(0, limit)
+        .map((productWithSales) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { salesCount, ...product } = productWithSales;
+          return product;
+        });
+
+      // If we don't have enough top selling products, fill with recent products
+      if (topSellingProducts.length < limit) {
+        const remainingProducts = allProducts
+          .filter((product) => !topSellingProducts.some((top) => top.id === product.id))
+          .sort((a, b) => {
+            // Sort by creation date if available
+            if (a.createdAt && b.createdAt) {
+              try {
+                return b.createdAt.toDate().getTime() - a.createdAt.toDate().getTime();
+              } catch {
+                return 0;
+              }
+            }
+            return 0;
+          })
+          .slice(0, limit - topSellingProducts.length);
+
+        return [...topSellingProducts, ...remainingProducts];
+      }
+
+      return topSellingProducts;
     } catch (error) {
       console.error("Error fetching featured products:", error);
-      throw error;
+      // Fallback to original method if there's an error
+      const allProducts = await this.getAllProducts();
+      return allProducts.slice(0, limit);
     }
   }
 }

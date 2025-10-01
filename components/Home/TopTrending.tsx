@@ -32,18 +32,6 @@ export default function TopTrending() {
     fetchProducts();
   }, []);
 
-  if (loading) {
-    return (
-      <section className="bg-white px-4 py-16">
-        <div className="mx-auto max-w-7xl text-center">
-          <div className="bg-primary-green mb-8 inline-flex items-center rounded-full px-4 py-2 text-sm font-bold text-black">
-            Loading...
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="bg-white px-4 py-16">
       <div className="mx-auto max-w-7xl">
@@ -52,27 +40,6 @@ export default function TopTrending() {
           <div className="bg-primary-green inline-flex items-center rounded-full px-6 py-4 text-3xl font-bold text-black">
             <span style={{ fontFamily: "var(--font-syne)" }}>Top Trending</span>
           </div>
-
-          {/* <div className="mb-8 flex flex-wrap justify-center gap-6">
-            <button
-              className="rounded-full bg-gray-100 px-6 py-2 text-sm font-medium transition-all duration-300 hover:bg-primary-green hover:text-black"
-              style={{ fontFamily: "var(--font-poppins)" }}
-            >
-              All
-            </button>
-            <button
-              className="rounded-full bg-gray-100 px-6 py-2 text-sm font-medium transition-all duration-300 hover:bg-primary-green hover:text-black"
-              style={{ fontFamily: "var(--font-poppins)" }}
-            >
-              Basketball
-            </button>
-            <button
-              className="rounded-full bg-gray-100 px-6 py-2 text-sm font-medium transition-all duration-300 hover:bg-primary-green hover:text-black"
-              style={{ fontFamily: "var(--font-poppins)" }}
-            >
-              Running Shoes
-            </button>
-          </div> */}
         </div>
 
         {/* Products Grid */}
@@ -81,13 +48,11 @@ export default function TopTrending() {
             <Link
               key={product.id}
               href={`/collections/${product.category.toLowerCase()}/${product.id}`}
-              className="group"
+              className="group h-full"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
             >
-              <div
-                className="group-hover:-translate-y- rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg"
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-              >
+              <div className="flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 group-hover:-translate-y-1 hover:shadow-lg">
                 {/* Product Image */}
                 <div className="relative mb-6 overflow-hidden rounded-xl bg-gray-50">
                   <Image
@@ -107,7 +72,7 @@ export default function TopTrending() {
                 </div>
 
                 {/* Product Info */}
-                <div className="space-y-3">
+                <div className="flex flex-1 flex-col justify-between space-y-3">
                   <h3
                     className="line-clamp-2 font-semibold text-gray-900 transition-colors duration-300"
                     style={{ fontFamily: "var(--font-poppins)" }}
@@ -125,16 +90,6 @@ export default function TopTrending() {
                         In Stock
                       </span>
                     )}
-                  </div>
-
-                  {/* Rating Stars */}
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <svg key={i} className="h-4 w-4 fill-current text-yellow-400" viewBox="0 0 24 24">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                      </svg>
-                    ))}
-                    <span className="ml-2 text-xs text-gray-500">(4.8)</span>
                   </div>
                 </div>
               </div>

@@ -34,36 +34,36 @@ export default function ProductTabs({ product }: ProductTabsProps) {
   return (
     <div className="mt-12" data-aos="fade-up" data-aos-duration="800">
       {/* Desktop Tab Navigation */}
-      <div className="hidden space-x-2 text-sm md:flex">
+      <div className="hidden space-x-6 text-lg md:flex" style={{ fontFamily: "var(--font-syne)" }}>
         <button
           onClick={() => handleTabClick("DESCRIPTION")}
-          className={`rounded-xl px-6 py-3 font-medium ${
+          className={`rounded-full px-6 py-3 font-medium ${
             activeTab === "DESCRIPTION"
-              ? "bg-red-800 text-white"
+              ? "bg-primary-green text-black"
               : "cursor-pointer bg-gray-200 text-gray-500 transition-colors hover:bg-gray-300"
           }`}
         >
-          DESCRIPTION
+          Description
         </button>
         <button
           onClick={() => handleTabClick("DETAILS")}
-          className={`rounded-xl px-6 py-3 font-medium ${
+          className={`rounded-full px-6 py-3 font-medium ${
             activeTab === "DETAILS"
-              ? "bg-red-800 text-white"
+              ? "bg-primary-green text-black"
               : "cursor-pointer bg-gray-200 text-gray-500 transition-colors hover:bg-gray-300"
           }`}
         >
-          DETAILS
+          Details
         </button>
         <button
           onClick={() => handleTabClick("REVIEW")}
-          className={`rounded-xl px-6 py-3 font-medium ${
+          className={`rounded-full px-6 py-3 font-medium ${
             activeTab === "REVIEW"
-              ? "bg-red-800 text-white"
+              ? "bg-primary-green text-black"
               : "cursor-pointer bg-gray-200 text-gray-500 transition-colors hover:bg-gray-300"
           }`}
         >
-          REVIEW
+          Review
         </button>
       </div>
 
@@ -102,38 +102,38 @@ export default function ProductTabs({ product }: ProductTabsProps) {
       <div className="mt-4 rounded-lg border border-gray-200 bg-white p-6">
         {activeTab === "DESCRIPTION" && (
           <div data-aos="fade" data-aos-duration="400" data-aos-once="false" key="description">
-            <h4 className="mb-3 font-bold text-gray-900">Description</h4>
+            {/* <h4 className="mb-3 font-bold text-gray-900">Description</h4> */}
             <p className="text-sm leading-relaxed text-gray-700">{product.description}</p>
           </div>
         )}
 
         {activeTab === "DETAILS" && (
           <div data-aos="fade" data-aos-duration="400" data-aos-once="false" key="details">
-            <h4 className="mb-3 font-bold text-gray-900">Product Details</h4>
-            <table className="w-full border-separate [border-spacing:0.5rem] text-sm text-gray-700">
+            {/* <h4 className="mb-3 font-bold text-gray-900">Product Details</h4> */}
+            <table className="w-full border-separate border-spacing-y-5 text-sm text-gray-700">
               <tbody>
                 <tr className="transition-colors duration-200 hover:bg-gray-50">
-                  <td className="w-32 font-semibold">Brand:</td>
+                  <td className="w-32 font-semibold">Brand</td>
                   <td>{product.brand || "N/A"}</td>
                 </tr>
                 <tr className="transition-colors duration-200 hover:bg-gray-50">
-                  <td className="font-semibold">Model:</td>
+                  <td className="font-semibold">Model</td>
                   <td>{product.name}</td>
                 </tr>
                 <tr className="transition-colors duration-200 hover:bg-gray-50">
-                  <td className="font-semibold">Colorway:</td>
+                  <td className="font-semibold">Colorway</td>
                   <td>{product.colorway || "N/A"}</td>
                 </tr>
                 <tr className="transition-colors duration-200 hover:bg-gray-50">
-                  <td className="font-semibold">Category:</td>
+                  <td className="font-semibold">Category</td>
                   <td>{product.category}</td>
                 </tr>
                 <tr className="transition-colors duration-200 hover:bg-gray-50">
-                  <td className="font-semibold">Material:</td>
+                  <td className="font-semibold">Material</td>
                   <td>{product.material || "N/A"}</td>
                 </tr>
                 <tr className="transition-colors duration-200 hover:bg-gray-50">
-                  <td className="font-semibold">Gender:</td>
+                  <td className="font-semibold">Gender</td>
                   <td>{product.gender || "N/A"}</td>
                 </tr>
               </tbody>

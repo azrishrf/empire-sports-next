@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Toastify from "toastify-js";
 
-export default function ProductPageClient({ product }: { product: Product }) {
+export default function ProductPage({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCart();
@@ -64,7 +64,7 @@ export default function ProductPageClient({ product }: { product: Product }) {
         {/* Product Images */}
         <div className="space-y-4">
           {/* Main Image */}
-          <div className="aspect-square overflow-hidden rounded-lg bg-white" data-aos="zoom-in" data-aos-duration="800">
+          <div className="aspect-square overflow-hidden rounded-lg bg-white" data-aos="fade" data-aos-duration="500">
             <Image
               src={product.image}
               alt={product.name}
@@ -101,8 +101,10 @@ export default function ProductPageClient({ product }: { product: Product }) {
         {/* Product Details */}
         <div className="space-y-6">
           <div>
-            <h1 className="text-xl font-bold text-gray-900 md:text-3xl">{product.name}</h1>
-            <p className="mt-4 text-2xl font-bold text-gray-900">{product.price}</p>
+            <h1 className="text-xl font-bold text-gray-900 md:text-3xl" style={{ fontFamily: "var(--font-syne)" }}>
+              {product.name}
+            </h1>
+            <p className="mt-4 text-2xl font-medium text-gray-900">{product.price}</p>
           </div>
 
           {/* Product Info */}
@@ -127,15 +129,15 @@ export default function ProductPageClient({ product }: { product: Product }) {
 
           {/* Size Selection */}
           <div>
-            <h3 className="mb-3 text-sm font-bold text-gray-900">CHOOSE UK SIZE IN STOCK</h3>
+            <h3 className="mb-3 text-sm font-medium text-gray-900">Choose Size In Stock</h3>
             <div className="flex flex-wrap gap-3">
               {product.sizes!.map((size: string) => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
-                  className={`rounded border px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`rounded-xl border px-4 py-2 text-sm font-medium transition-colors ${
                     selectedSize === size
-                      ? "border-red-900 bg-red-900 text-white"
+                      ? "border-primary-green bg-primary-green text-black"
                       : "border-gray-300 bg-white text-gray-700 hover:bg-gray-200"
                   }`}
                 >
@@ -147,11 +149,11 @@ export default function ProductPageClient({ product }: { product: Product }) {
 
           {/* Quantity */}
           <div>
-            <h3 className="mb-3 text-sm font-bold text-gray-900">QUANTITY</h3>
+            <h3 className="mb-3 text-sm font-medium text-gray-900">Quantity</h3>
             <div className="flex items-center">
               <button
                 onClick={() => handleQuantityChange(-1)}
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-l-lg bg-gray-400 text-white hover:bg-gray-500"
+                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-l-xl border-t border-b border-l border-gray-300 text-black"
               >
                 -
               </button>
@@ -159,11 +161,11 @@ export default function ProductPageClient({ product }: { product: Product }) {
                 type="number"
                 value={quantity}
                 onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                className="h-8 w-12 appearance-none border-t border-b border-gray-300 text-center text-sm [-webkit-appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                className="h-10 w-6 appearance-none border-t border-b border-gray-300 text-center text-sm [-webkit-appearance:textfield] focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               />
               <button
                 onClick={() => handleQuantityChange(1)}
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-r-lg bg-gray-400 text-white hover:bg-gray-500"
+                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-r-xl border-t border-r border-b border-gray-300 text-black"
               >
                 +
               </button>
@@ -174,9 +176,9 @@ export default function ProductPageClient({ product }: { product: Product }) {
           <div className="flex space-x-4">
             <button
               onClick={handleAddToCart}
-              className="flex-1 cursor-pointer rounded-lg bg-[#283071] px-6 py-3 font-bold text-white transition-colors hover:bg-blue-900"
+              className="bg-dark-green flex-1 cursor-pointer rounded-2xl px-6 py-3 font-medium text-black transition-colors duration-300 hover:bg-black hover:text-white"
             >
-              ADD TO CART
+              Add To Cart
             </button>
           </div>
         </div>

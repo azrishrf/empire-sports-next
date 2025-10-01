@@ -20,7 +20,7 @@ export interface Product {
   sizes?: string[];
   availability?: string;
   description?: string;
-  brand?: string;
+  brand: string;
   colorway?: string;
   material?: string;
   gender?: string;

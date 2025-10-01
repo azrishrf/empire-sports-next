@@ -1,9 +1,9 @@
 import Breadcrumb from "@/components/Breadcrumb";
-import Reviews from "@/components/Home/Reviews";
+import RelatedProducts from "@/components/Product/RelatedProducts";
 import { categoryConfig } from "@/data/products";
 import { ProductService } from "@/lib/productService";
 import { notFound } from "next/navigation";
-import ProductPageClient from "./ProductPageClient";
+import ProductPageClient from "./ProductPage";
 
 interface ProductPageProps {
   params: Promise<{
@@ -37,7 +37,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <div className="min-h-screen bg-gray-50">
         <Breadcrumb items={breadcrumbItems} />
         <ProductPageClient product={product} />
-        <Reviews backgroundColor="bg-gray-100" titleColor="text-black" descriptionColor="text-black" />
+        {/* <Reviews backgroundColor="bg-gray-100" titleColor="text-black" descriptionColor="text-black" /> */}
+        <RelatedProducts category={product.category} currentProductId={productId} currentProductBrand={product.brand} />
       </div>
     );
   } catch (error) {
