@@ -11,11 +11,11 @@ import { IoPerson } from "react-icons/io5";
 import Toastify from "toastify-js";
 
 const navItems = [
-  { href: "/collections/running", label: "RUNNING" },
-  { href: "/collections/sneakers", label: "SNEAKERS" },
-  { href: "/collections/clothing", label: "CLOTHING" },
-  { href: "/collections/sandals", label: "SANDALS" },
-  { href: "/collections/basketball", label: "BASKETBALL" },
+  { href: "/collections/men", label: "MEN" },
+  { href: "/collections/women", label: "WOMEN" },
+  { href: "/collections/greatdeals", label: "GREAT DEALS" },
+  { href: "/collections/brands", label: "TOP BRANDS" },
+  { href: "/about-us", label: "ABOUT US" },
 ];
 
 export default function Header() {
@@ -75,7 +75,9 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="hover:text-primary-green block px-10 py-2.5 font-medium text-white no-underline transition-all duration-300"
+                  className={`block px-10 py-2.5 font-medium no-underline transition-all duration-300 ${
+                    item.label === "GREAT DEALS" ? "text-primary-green" : "hover:text-primary-green text-white"
+                  }`}
                   style={{ fontFamily: "var(--font-syne)" }}
                 >
                   {item.label}
@@ -223,7 +225,11 @@ export default function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="block rounded-lg px-4 py-3 font-medium text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-[#283071]"
+                  className={`block rounded-lg px-4 py-3 font-medium transition-colors duration-200 hover:bg-gray-100 ${
+                    item.label === "GREAT DEALS"
+                      ? "text-primary-green hover:text-[#283071]"
+                      : "text-gray-700 hover:text-[#283071]"
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}

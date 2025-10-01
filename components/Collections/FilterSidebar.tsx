@@ -22,10 +22,13 @@ const genders = [
 interface FilterSidebarProps {
   products: Product[];
   selectedCategories: string[];
+  selectedBrands?: string[];
   selectedGenders: string[];
   priceRange: number[];
   isMobileFilterOpen: boolean;
+  availableFilters?: string[];
   onCategoryChange: (category: string) => void;
+  onBrandChange?: (brand: string) => void;
   onGenderChange: (gender: string) => void;
   onPriceRangeChange: (range: number[]) => void;
   onMobileFilterToggle: (open: boolean) => void;
@@ -34,10 +37,13 @@ interface FilterSidebarProps {
 export default function FilterSidebar({
   products,
   selectedCategories,
+  selectedBrands = [],
   selectedGenders,
   priceRange,
   isMobileFilterOpen,
+  availableFilters = ["categories", "brands", "gender", "price"],
   onCategoryChange,
+  onBrandChange,
   onGenderChange,
   onPriceRangeChange,
   onMobileFilterToggle,
@@ -52,6 +58,20 @@ export default function FilterSidebar({
         product.gender?.toLowerCase().includes(gender.toLowerCase()) ||
         product.name.toLowerCase().includes(gender.toLowerCase()),
     ).length;
+  };
+
+  const getBrandCount = (brand: string) => {
+    return products.filter((product) => product.brand?.toLowerCase().includes(brand.toLowerCase())).length;
+  };
+
+  // Get unique brands from products
+  const getUniqueBrands = () => {
+    const brands = products
+      .map((product) => product.brand)
+      .filter((brand) => brand && brand.trim() !== "")
+      .map((brand) => brand!.trim());
+
+    return [...new Set(brands)].sort();
   };
 
   return (
@@ -86,98 +106,139 @@ export default function FilterSidebar({
 
           <div className="space-y-6">
             {/* Categories Filter */}
-            <div>
-              <h3
-                className="mb-4 flex items-center justify-between text-sm font-semibold"
-                style={{ fontFamily: "var(--font-syne)" }}
-              >
-                Categories
-              </h3>
-              <div className="space-y-3">
-                {categories.map((category) => (
-                  <label key={category.slug} className="flex cursor-pointer items-center justify-between">
-                    <div className="flex items-center text-xs">
-                      <div className="mr-2 flex items-center">
-                        {selectedCategories.includes(category.slug) ? (
-                          <BiCheckboxSquare
-                            className="h-5 w-5 text-[var(--color-primary-green)]"
-                            onClick={() => onCategoryChange(category.slug)}
-                          />
-                        ) : (
-                          <BiCheckbox
-                            className="h-5 w-5 text-gray-400"
-                            onClick={() => onCategoryChange(category.slug)}
-                          />
-                        )}
+            {availableFilters.includes("categories") && (
+              <div>
+                <h3
+                  className="mb-4 flex items-center justify-between text-sm font-semibold"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  Categories
+                </h3>
+                <div className="space-y-3">
+                  {categories.map((category) => (
+                    <label key={category.slug} className="flex cursor-pointer items-center justify-between">
+                      <div className="flex items-center text-xs">
+                        <div className="mr-2 flex items-center">
+                          {selectedCategories.includes(category.slug) ? (
+                            <BiCheckboxSquare
+                              className="h-5 w-5 text-[var(--color-primary-green)]"
+                              onClick={() => onCategoryChange(category.slug)}
+                            />
+                          ) : (
+                            <BiCheckbox
+                              className="h-5 w-5 text-gray-400"
+                              onClick={() => onCategoryChange(category.slug)}
+                            />
+                          )}
+                        </div>
+                        <span className="text-gray-700">{category.name}</span>
                       </div>
-                      <span className="text-gray-700">{category.name}</span>
-                    </div>
-                    <span className="text-xs text-gray-500">({getCategoryCount(category.slug)})</span>
-                  </label>
-                ))}
+                      <span className="text-xs text-gray-500">({getCategoryCount(category.slug)})</span>
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Brands Filter */}
+            {availableFilters.includes("brands") && (
+              <div>
+                <h3
+                  className="mb-4 flex items-center justify-between text-sm font-semibold"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  Brands
+                </h3>
+                <div className="space-y-3">
+                  {getUniqueBrands().map((brand) => (
+                    <label key={brand} className="flex cursor-pointer items-center justify-between">
+                      <div className="flex items-center text-xs">
+                        <div className="mr-2 flex items-center">
+                          {selectedBrands.includes(brand) ? (
+                            <BiCheckboxSquare
+                              className="h-5 w-5 text-[var(--color-primary-green)]"
+                              onClick={() => onBrandChange?.(brand)}
+                            />
+                          ) : (
+                            <BiCheckbox className="h-5 w-5 text-gray-400" onClick={() => onBrandChange?.(brand)} />
+                          )}
+                        </div>
+                        <span className="text-gray-700">{brand}</span>
+                      </div>
+                      <span className="text-xs text-gray-500">({getBrandCount(brand)})</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Gender Filter */}
-            <div>
-              <h3
-                className="mb-4 flex items-center justify-between text-sm font-semibold"
-                style={{ fontFamily: "var(--font-syne)" }}
-              >
-                Gender
-              </h3>
-              <div className="space-y-3">
-                {genders.map((gender) => (
-                  <label key={gender.value} className="flex cursor-pointer items-center justify-between text-xs">
-                    <div className="flex items-center">
-                      <div className="mr-2 flex items-center">
-                        {selectedGenders.includes(gender.value) ? (
-                          <BiCheckboxSquare
-                            className="h-5 w-5 text-[var(--color-primary-green)]"
-                            onClick={() => onGenderChange(gender.value)}
-                          />
-                        ) : (
-                          <BiCheckbox className="h-5 w-5 text-gray-400" onClick={() => onGenderChange(gender.value)} />
-                        )}
+            {availableFilters.includes("gender") && (
+              <div>
+                <h3
+                  className="mb-4 flex items-center justify-between text-sm font-semibold"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  Gender
+                </h3>
+                <div className="space-y-3">
+                  {genders.map((gender) => (
+                    <label key={gender.value} className="flex cursor-pointer items-center justify-between text-xs">
+                      <div className="flex items-center">
+                        <div className="mr-2 flex items-center">
+                          {selectedGenders.includes(gender.value) ? (
+                            <BiCheckboxSquare
+                              className="h-5 w-5 text-[var(--color-primary-green)]"
+                              onClick={() => onGenderChange(gender.value)}
+                            />
+                          ) : (
+                            <BiCheckbox
+                              className="h-5 w-5 text-gray-400"
+                              onClick={() => onGenderChange(gender.value)}
+                            />
+                          )}
+                        </div>
+                        <span className="text-gray-700">{gender.name}</span>
                       </div>
-                      <span className="text-gray-700">{gender.name}</span>
-                    </div>
-                    <span className="text-xs text-gray-500">({getGenderCount(gender.value)})</span>
-                  </label>
-                ))}
+                      <span className="text-xs text-gray-500">({getGenderCount(gender.value)})</span>
+                    </label>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Price Filter */}
-            <div>
-              <h3
-                className="mb-4 flex items-center justify-between text-sm font-semibold"
-                style={{ fontFamily: "var(--font-syne)" }}
-              >
-                Price
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center">
-                    <span className="mr-2 text-xs text-gray-600">Min Price</span>
-                    <span className="text-sm font-medium">RM{priceRange[0]}</span>
+            {availableFilters.includes("price") && (
+              <div>
+                <h3
+                  className="mb-4 flex items-center justify-between text-sm font-semibold"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  Price
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center">
+                      <span className="mr-2 text-xs text-gray-600">Min Price</span>
+                      <span className="text-sm font-medium">RM{priceRange[0]}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="mr-2 text-xs text-gray-600">Max Price</span>
+                      <span className="text-sm font-medium">RM{priceRange[1]}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <span className="mr-2 text-xs text-gray-600">Max Price</span>
-                    <span className="text-sm font-medium">RM{priceRange[1]}</span>
-                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="1000"
+                    value={priceRange[1]}
+                    onChange={(e) => onPriceRangeChange([priceRange[0], parseInt(e.target.value)])}
+                    className="slider h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
+                    style={{ accentColor: "var(--color-primary-green)" }}
+                  />
                 </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  value={priceRange[1]}
-                  onChange={(e) => onPriceRangeChange([priceRange[0], parseInt(e.target.value)])}
-                  className="slider h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
-                  style={{ accentColor: "var(--color-primary-green)" }}
-                />
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
