@@ -49,7 +49,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setLoading(true);
       setIsLoadingFromFirestore(true);
       const cartItems = await CartService.loadCart(user.uid);
-      console.log("Loaded cart from Firestore:", cartItems);
       setItems(cartItems);
     } catch (error) {
       console.error("Error loading cart:", error);
@@ -99,7 +98,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     // 3. Not currently loading
     // 4. Not currently loading from Firestore (prevent overwriting during load)
     if (user && isInitialized && !loading && !isLoadingFromFirestore) {
-      console.log("Saving cart changes to Firestore:", items.length, "items");
       saveCartToFirestore();
     }
   }, [items, user, isInitialized, loading, isLoadingFromFirestore, saveCartToFirestore]);

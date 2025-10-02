@@ -16,17 +16,6 @@ export class CartService {
     try {
       const cartRef = this.getCartDocRef(userId);
 
-      // Check if we're about to overwrite existing data with empty cart
-      if (items.length === 0) {
-        const existingCart = await getDoc(cartRef);
-        if (existingCart.exists() && existingCart.data().items?.length > 0) {
-          console.warn(
-            `⚠️ Attempting to save empty cart for user ${userId}, but existing cart has ${existingCart.data().items.length} items. Skipping save to prevent data loss.`,
-          );
-          return;
-        }
-      }
-
       const cartData = {
         items: items.map((item) => ({
           id: item.id,
@@ -45,12 +34,6 @@ export class CartService {
       };
 
       await setDoc(cartRef, cartData, { merge: true });
-      console.log(`✅ Cart saved to Firestore successfully for user ${userId}:`, {
-        itemCount: items.length,
-        totalItems: cartData.totalItems,
-        totalPrice: cartData.totalPrice,
-        timestamp: new Date().toLocaleTimeString(),
-      });
     } catch (error) {
       console.error("Error saving cart to Firestore:", error);
       if (error instanceof Error && error.message.includes("Cloud Firestore API")) {
@@ -71,13 +54,6 @@ export class CartService {
       if (cartSnap.exists()) {
         const cartData = cartSnap.data();
         const items = cartData.items || [];
-
-        console.log(`Cart loaded from Firestore for user ${userId}:`, {
-          itemCount: items.length,
-          totalItems: cartData.totalItems,
-          totalPrice: cartData.totalPrice,
-          lastUpdated: cartData.updatedAt,
-        });
 
         // Add subtotal calculation to each item
         return items.map((item: FirestoreCartItem) => ({

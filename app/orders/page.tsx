@@ -71,11 +71,8 @@ export default function OrdersPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "success":
-      case "delivered":
+      case "confirmed":
         return "bg-green-100 text-green-800 border-green-200";
-      case "processing":
-      case "shipped":
-        return "bg-blue-100 text-blue-800 border-blue-200";
       case "pending":
         return "bg-yellow-100 text-yellow-800 border-yellow-200";
       case "failed":
@@ -225,7 +222,7 @@ export default function OrdersPage() {
                       </h4>
                       <div className="space-y-3">
                         {order.items.map((item, itemIndex) => (
-                          <div key={itemIndex} className="flex items-center justify-between rounded-lg bg-gray-50">
+                          <div key={itemIndex} className="flex items-center justify-between">
                             <div className="flex-1">
                               <p className="text-sm font-medium text-gray-900">
                                 {item.name} x {item.quantity}
@@ -247,7 +244,7 @@ export default function OrdersPage() {
                       <h4 className="mb-4 font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>
                         Order Summary
                       </h4>
-                      <div className="space-y-3 rounded-lg bg-gray-50 text-sm">
+                      <div className="space-y-3 text-sm">
                         <div className="flex justify-between text-gray-600">
                           <span>Subtotal:</span>
                           <span className="font-medium">RM{order.subtotal.toFixed(2)}</span>

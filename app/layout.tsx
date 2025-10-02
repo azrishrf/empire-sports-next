@@ -1,8 +1,4 @@
-import AOSProvider from "@/components/AOSProvider";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { CartProvider } from "@/contexts/CartContext";
+import LayoutWrapper from "@/components/LayoutWrapper";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Poppins, Syne } from "next/font/google";
@@ -31,15 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`min-h-screen ${poppins.variable} ${syne.variable}`}>
-        <AuthProvider>
-          <CartProvider>
-            <AOSProvider>
-              <Header />
-              {children}
-              <Footer />
-            </AOSProvider>
-          </CartProvider>
-        </AuthProvider>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );

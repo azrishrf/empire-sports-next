@@ -66,8 +66,6 @@ export default function CartPage() {
       const result = await response.json();
 
       if (result.success && result.data.billCode) {
-        console.log("Payment created successfully, now creating order in Firestore...");
-
         // Create order in Firestore client-side
         try {
           const orderDocId = await OrderService.createOrder({
@@ -87,10 +85,16 @@ export default function CartPage() {
             paymentUrl: result.data.paymentUrl,
           });
 
-          console.log("Order created in Firestore with ID:", orderDocId);
+          // Store pending payment info in localStorage
+          localStorage.setItem(
+            "pendingPayment",
+            JSON.stringify({
+              orderId,
+              billCode: result.data.billCode,
+              timestamp: Date.now(),
+            }),
+          );
 
-          // Clear cart and redirect to payment
-          // Note: You might want to clear the cart here or after successful payment
           window.location.href = result.data.paymentUrl;
         } catch (orderError) {
           console.error("Failed to create order in Firestore:", orderError);
@@ -172,7 +176,7 @@ export default function CartPage() {
       <div className="container mx-auto max-w-[1400px] px-4 !pt-4 pb-16">
         {cartItems.length === 0 ? (
           /* Empty Cart State */
-          <div className="py-16 text-center" data-aos="fade-up">
+          <div className="py-16 text-center">
             <div className="mx-auto max-w-md">
               <FiShoppingBag className="mx-auto mb-6 text-6xl text-gray-400" />
               <h2 className="mb-4 text-2xl font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>
@@ -183,7 +187,7 @@ export default function CartPage() {
               </p>
               <Link
                 href="/collections"
-                className="inline-flex items-center rounded-lg bg-gray-900 px-8 py-3 text-lg font-medium text-white transition-colors duration-300 hover:bg-gray-800"
+                className="inline-flex items-center rounded-lg bg-gray-900 px-8 py-3 font-medium text-white transition-colors duration-300 hover:bg-gray-800"
               >
                 <FiShoppingBag className="mr-2" />
                 Continue Shopping
@@ -264,7 +268,7 @@ export default function CartPage() {
                           </div>
 
                           {/* Quantity Controls */}
-                          <div className="flex max-w-20 items-center justify-between space-x-6 md:justify-center">
+                          <div className="flex items-center justify-between space-x-2 md:justify-center">
                             <div className="flex items-center rounded-lg bg-gray-100">
                               <button
                                 onClick={() => handleQuantityChange(item.id, item.size, -1)}
@@ -304,7 +308,7 @@ export default function CartPage() {
                           </div>
 
                           {/* Desktop Price */}
-                          <div className="hidden min-w-32 text-right md:block">
+                          <div className="hidden min-w-28 text-right md:block">
                             <span className="text-lg font-bold text-gray-900">RM{item.subtotal.toFixed(2)}</span>
                           </div>
                         </div>

@@ -167,10 +167,15 @@ export default function CartSidebar({ isOpen, onClose, newlyAddedItem }: CartSid
             paymentUrl: result.data.paymentUrl,
           });
 
-          console.log("Order created in Firestore with ID:", orderDocId);
-
-          // Clear cart and redirect to payment
-          // Note: You might want to clear the cart here or after successful payment
+          // Store pending payment info in localStorage
+          localStorage.setItem(
+            "pendingPayment",
+            JSON.stringify({
+              orderId,
+              billCode: result.data.billCode,
+              timestamp: Date.now(),
+            }),
+          );
           window.location.href = result.data.paymentUrl;
         } catch (orderError) {
           console.error("Failed to create order in Firestore:", orderError);
