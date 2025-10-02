@@ -49,7 +49,6 @@ export class UserService {
       }
 
       await setDoc(userRef, userProfile);
-      console.log("User profile created successfully:", userProfile);
     } catch (error) {
       console.error("Error creating user profile:", error);
       throw error;
@@ -64,10 +63,8 @@ export class UserService {
 
       if (userSnap.exists()) {
         const userData = userSnap.data() as UserProfile;
-        console.log("User profile loaded:", userData);
         return userData;
       } else {
-        console.log("No user profile found");
         return null;
       }
     } catch (error) {
@@ -93,7 +90,6 @@ export class UserService {
       const cleanedData = Object.fromEntries(Object.entries(updatedData).filter(([_, value]) => value !== undefined));
 
       await updateDoc(userRef, cleanedData);
-      console.log("User profile updated successfully");
     } catch (error) {
       console.error("Error updating user profile:", error);
       throw error;
@@ -108,7 +104,6 @@ export class UserService {
       // Check if profile already exists
       const existingProfile = await getDoc(userRef);
       if (existingProfile.exists()) {
-        console.log("Google user profile already exists");
         return;
       }
 
@@ -134,7 +129,6 @@ export class UserService {
       }
 
       await setDoc(userRef, userProfile);
-      console.log("Google user profile created successfully:", userProfile);
     } catch (error) {
       console.error("Error creating Google user profile:", error);
       throw error;

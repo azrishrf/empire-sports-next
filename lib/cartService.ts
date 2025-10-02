@@ -62,7 +62,6 @@ export class CartService {
           updatedAt: undefined, // Remove updatedAt from cart items
         }));
       } else {
-        console.log(`No cart found for user ${userId}`);
         return [];
       }
     } catch (error) {
@@ -160,7 +159,6 @@ export class CartService {
     try {
       const cartRef = this.getCartDocRef(userId);
       await deleteDoc(cartRef);
-      console.log("Cart cleared from Firestore");
     } catch (error) {
       console.error("Error clearing cart from Firestore:", error);
       throw error;

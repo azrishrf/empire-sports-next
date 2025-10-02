@@ -146,11 +146,9 @@ export default function CartSidebar({ isOpen, onClose, newlyAddedItem }: CartSid
       const result = await response.json();
 
       if (result.success && result.data.billCode) {
-        console.log("Payment created successfully, now creating order in Firestore...");
-
         // Create order in Firestore client-side
         try {
-          const orderDocId = await OrderService.createOrder({
+          await OrderService.createOrder({
             orderId,
             userId: user.uid,
             customerName: user.displayName || user.email || "Customer",

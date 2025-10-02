@@ -68,7 +68,7 @@ export default function CartPage() {
       if (result.success && result.data.billCode) {
         // Create order in Firestore client-side
         try {
-          const orderDocId = await OrderService.createOrder({
+          await OrderService.createOrder({
             orderId,
             userId: user.uid,
             customerName: user.displayName || user.email || "Customer",

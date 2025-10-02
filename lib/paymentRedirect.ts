@@ -39,7 +39,6 @@ export function usePaymentRedirect() {
 
       if (isRecent) {
         // User has a recent pending payment, redirect to status page
-        console.log("Redirecting to payment status page due to pending payment:", pendingPayment.orderId);
         router.push(`/payment/status?billcode=${pendingPayment.billCode}&order_id=${pendingPayment.orderId}`);
       } else {
         // Payment is too old, clear it

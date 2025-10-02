@@ -43,20 +43,15 @@ export class ServerOrderService {
    */
   static async getOrderByOrderId(orderId: string): Promise<(Order & { id: string }) | null> {
     try {
-      console.log("Searching for order with orderId:", orderId);
-
       const ordersRef = db.collection("orders");
       const snapshot = await ordersRef.where("orderId", "==", orderId).limit(1).get();
 
       if (snapshot.empty) {
-        console.log("No order found with orderId:", orderId);
         return null;
       }
 
       const doc = snapshot.docs[0];
       const orderData = doc.data() as Order;
-
-      console.log("Found order:", { id: doc.id, orderId: orderData.orderId });
 
       return {
         id: doc.id,
@@ -81,8 +76,6 @@ export class ServerOrderService {
     },
   ): Promise<void> {
     try {
-      console.log("Updating order payment status:", { documentId, paymentData });
-
       const orderRef = db.collection("orders").doc(documentId);
 
       await orderRef.update({
@@ -99,8 +92,6 @@ export class ServerOrderService {
           status: "confirmed",
         });
       }
-
-      console.log("Order payment status updated successfully");
     } catch (error) {
       console.error("Error updating order payment status:", error);
       throw new Error(`Failed to update order: ${error instanceof Error ? error.message : "Unknown error"}`);

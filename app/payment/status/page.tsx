@@ -105,7 +105,6 @@ function PaymentStatusContent() {
   }
 
   if (!paymentStatus || paymentStatus.status === "failed" || paymentStatus.status === "error") {
-    console.log("test: ", paymentStatus);
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="max-w-md rounded-lg bg-white p-8 text-center shadow-md">
