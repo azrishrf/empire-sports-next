@@ -25,7 +25,7 @@ export default function Header() {
   const [isUserMenuAnimating, setIsUserMenuAnimating] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { getTotalItems } = useCart();
-  const { user, signOut } = useAuth();
+  const { user, signOut, loading } = useAuth();
 
   const handleUserMenuToggle = useCallback(() => {
     if (isUserMenuOpen) {
@@ -128,7 +128,7 @@ export default function Header() {
                   }`}
                   style={{ fontFamily: "var(--font-syne)" }}
                 >
-                  {item.label}
+                  <span className="whitespace-nowrap">{item.label}</span>
                 </Link>
               </li>
             ))}
@@ -137,14 +137,19 @@ export default function Header() {
 
         {/* Desktop Actions - Hidden on mobile */}
         <div className="hidden items-center space-x-4 md:flex">
-          {user ? (
+          {loading ? (
+            <div className="flex items-center space-x-2 text-white">
+              <BsPerson size={20} />
+              <div className="h-4 w-16 animate-pulse rounded bg-gray-600"></div>
+            </div>
+          ) : user ? (
             <div className="relative" ref={userMenuRef}>
               <button
                 onClick={handleUserMenuToggle}
                 className="hover:text-primary-green flex cursor-pointer items-center space-x-2 text-white"
               >
                 <BsPerson size={20} />
-                <span className="text-sm">{user.displayName}</span>
+                <span className="text-sm">{user.displayName || "User"}</span>
               </button>
               {isUserMenuOpen && (
                 <div
@@ -214,9 +219,13 @@ export default function Header() {
 
         {/* Mobile Actions - Only visible on mobile */}
         <div className="flex items-center space-x-3 md:hidden">
-          {user ? (
+          {loading ? (
+            <div className="flex items-center justify-center text-white">
+              <BsPerson size={20} className="hover:text-primary-green" />
+            </div>
+          ) : user ? (
             <div className="relative">
-              <button onClick={handleUserMenuToggle} className="text-white">
+              <button onClick={handleUserMenuToggle} className="flex items-center justify-center text-white">
                 <BsPerson size={20} className="hover:text-primary-green" />
               </button>
               {isUserMenuOpen && (

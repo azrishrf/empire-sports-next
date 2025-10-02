@@ -8,7 +8,8 @@ export interface UserProfile {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  gender: "male" | "female" | "";
+  gender: string;
+  address?: string;
   photoURL?: string;
   createdAt: Date;
   updatedAt: Date;
