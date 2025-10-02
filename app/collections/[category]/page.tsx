@@ -21,7 +21,7 @@ const collectionConfig: Record<string, ConfigType> = {
     genderFilter: "women",
   },
   greatdeals: {
-    title: "Great Deals Up to 50% OFFs",
+    title: "Great Deals Up to 50% OFF",
     filters: ["categories", "brands", "gender", "price"],
     genderFilter: null,
   },

@@ -4,10 +4,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { FaCartShopping } from "react-icons/fa6";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { BsPerson } from "react-icons/bs";
+import { FiLogOut, FiPackage, FiUser } from "react-icons/fi";
 import { HiMenu, HiX } from "react-icons/hi";
-import { IoPerson } from "react-icons/io5";
+import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import Toastify from "toastify-js";
 
 const navItems = [
@@ -21,26 +22,72 @@ const navItems = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isUserMenuAnimating, setIsUserMenuAnimating] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const { getTotalItems } = useCart();
   const { user, signOut } = useAuth();
+
+  const handleUserMenuToggle = useCallback(() => {
+    if (isUserMenuOpen) {
+      // Closing
+      setIsUserMenuAnimating(true);
+      setTimeout(() => {
+        setIsUserMenuOpen(false);
+        setIsUserMenuAnimating(false);
+      }, 150);
+    } else {
+      // Opening
+      setIsUserMenuOpen(true);
+      setIsUserMenuAnimating(true);
+      setTimeout(() => {
+        setIsUserMenuAnimating(false);
+      }, 150);
+    }
+  }, [isUserMenuOpen]);
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        if (isUserMenuOpen) {
+          handleUserMenuToggle();
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isUserMenuOpen, handleUserMenuToggle]);
+
+  const closeUserMenu = () => {
+    if (isUserMenuOpen) {
+      handleUserMenuToggle();
+    }
+  };
 
   const handleSignOut = async () => {
     try {
       await signOut();
-      setIsUserMenuOpen(false);
+      closeUserMenu(); // Close menu with animation
       Toastify({
         text: "Successfully signed out!",
         duration: 3000,
         backgroundColor: "#10B981",
         close: true,
       }).showToast();
-    } catch (error) {
+    } catch {
       Toastify({
         text: "Error signing out",
         duration: 3000,
         backgroundColor: "#EF4444",
       }).showToast();
     }
+  };
+
+  const handleMenuItemClick = () => {
+    closeUserMenu(); // Close menu with animation
   };
 
   return (
@@ -75,6 +122,7 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
+                  onClick={closeUserMenu}
                   className={`block px-10 py-2.5 font-medium no-underline transition-all duration-300 ${
                     item.label === "GREAT DEALS" ? "text-primary-green" : "hover:text-primary-green text-white"
                   }`}
@@ -90,39 +138,72 @@ export default function Header() {
         {/* Desktop Actions - Hidden on mobile */}
         <div className="hidden items-center space-x-4 md:flex">
           {user ? (
-            <div className="relative">
+            <div className="relative" ref={userMenuRef}>
               <button
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex cursor-pointer items-center space-x-2 text-white hover:text-gray-300"
+                onClick={handleUserMenuToggle}
+                className="hover:text-primary-green flex cursor-pointer items-center space-x-2 text-white"
               >
-                <IoPerson size={20} />
+                <BsPerson size={20} />
                 <span className="text-sm">{user.displayName}</span>
               </button>
               {isUserMenuOpen && (
-                <div className="absolute right-0 z-50 mt-4 w-48 rounded-md border border-gray-200 bg-white shadow-lg">
-                  <Link
-                    href="/orders"
-                    onClick={() => setIsUserMenuOpen(false)}
-                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    My Orders
-                  </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className="block w-full cursor-pointer px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Sign Out
-                  </button>
+                <div
+                  className={`absolute right-0 z-50 mt-3 w-64 rounded-2xl border border-gray-200 bg-white shadow-xl transition-all duration-150 ease-out ${
+                    isUserMenuAnimating ? "-translate-y-1 scale-95 opacity-0" : "translate-y-0 scale-100 opacity-100"
+                  }`}
+                  style={{
+                    transformOrigin: "top right",
+                  }}
+                >
+                  {/* User Info Header */}
+                  <div className="border-b border-gray-100 px-4 py-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+                        <FiUser className="h-5 w-5 text-gray-600" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-gray-900">{user.displayName || "User"}</p>
+                        <p className="truncate text-xs text-gray-500">{user.email}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="py-2">
+                    <Link
+                      href="/my-account"
+                      onClick={handleUserMenuToggle}
+                      className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 transition-colors duration-200 hover:bg-gray-100"
+                    >
+                      <FiUser className="h-4 w-4 text-gray-400" />
+                      <span>My Account</span>
+                    </Link>
+                    <Link
+                      href="/orders"
+                      onClick={handleUserMenuToggle}
+                      className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 transition-colors duration-200 hover:bg-gray-100"
+                    >
+                      <FiPackage className="h-4 w-4 text-gray-400" />
+                      <span>My Orders</span>
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="flex w-full cursor-pointer items-center space-x-3 px-4 py-3 text-sm text-gray-700 transition-colors duration-200 hover:bg-red-50 hover:text-red-600"
+                    >
+                      <FiLogOut className="h-4 w-4 text-gray-400" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
           ) : (
-            <Link href="/auth" className="text-white hover:text-gray-300">
-              <IoPerson size={20} />
+            <Link href="/auth" onClick={closeUserMenu} className="text-white hover:text-gray-300">
+              <BsPerson className="hover:text-primary-green" size={20} />
             </Link>
           )}
-          <Link href="/cart" className="relative">
-            <FaCartShopping className="hover:text-primary-green cursor-pointer text-lg text-white transition-colors duration-500 lg:text-xl" />
+          <Link href="/cart" onClick={closeUserMenu} className="relative">
+            <PiShoppingCartSimpleBold className="hover:text-primary-green cursor-pointer text-lg text-white transition-colors duration-500 lg:text-xl" />
             {getTotalItems() > 0 && (
               <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                 {getTotalItems()}
@@ -135,35 +216,67 @@ export default function Header() {
         <div className="flex items-center space-x-3 md:hidden">
           {user ? (
             <div className="relative">
-              <button onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} className="text-white">
-                <IoPerson size={20} />
+              <button onClick={handleUserMenuToggle} className="text-white">
+                <BsPerson size={20} className="hover:text-primary-green" />
               </button>
               {isUserMenuOpen && (
-                <div className="absolute right-0 z-50 mt-2 w-48 rounded-md border border-gray-200 bg-white shadow-lg">
-                  <div className="border-b px-4 py-2 text-sm text-gray-700">{user.email}</div>
-                  <Link
-                    href="/orders"
-                    onClick={() => setIsUserMenuOpen(false)}
-                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    My Orders
-                  </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Sign Out
-                  </button>
+                <div
+                  className={`absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-gray-200 bg-white shadow-xl transition-all duration-150 ease-out ${
+                    isUserMenuAnimating ? "-translate-y-1 scale-95 opacity-0" : "translate-y-0 scale-100 opacity-100"
+                  }`}
+                  style={{
+                    transformOrigin: "top right",
+                  }}
+                >
+                  {/* User Info Header */}
+                  <div className="border-b border-gray-100 px-4 py-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+                        <FiUser className="h-5 w-5 text-gray-600" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-gray-900">{user.displayName || "User"}</p>
+                        <p className="truncate text-xs text-gray-500">{user.email}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="py-2">
+                    <Link
+                      href="/my-account"
+                      onClick={handleMenuItemClick}
+                      className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 transition-colors duration-200 hover:bg-gray-50"
+                    >
+                      <FiUser className="h-4 w-4 text-gray-400" />
+                      <span>My Account</span>
+                    </Link>
+                    <Link
+                      href="/orders"
+                      onClick={handleMenuItemClick}
+                      className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 transition-colors duration-200 hover:bg-gray-50"
+                    >
+                      <FiPackage className="h-4 w-4 text-gray-400" />
+                      <span>My Orders</span>
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="flex w-full items-center space-x-3 px-4 py-3 text-sm text-gray-700 transition-colors duration-200 hover:bg-red-50 hover:text-red-600"
+                    >
+                      <FiLogOut className="h-4 w-4 text-gray-400" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
           ) : (
-            <Link href="/auth" className="text-white">
-              <IoPerson size={20} />
+            <Link href="/auth" onClick={closeUserMenu} className="text-white">
+              <BsPerson size={20} className="hover:text-primary-green" />
             </Link>
           )}
-          <Link href="/cart" className="relative">
-            <FaCartShopping className="cursor-pointer text-lg text-white" />
+          <Link href="/cart" onClick={closeUserMenu} className="relative">
+            <PiShoppingCartSimpleBold className="cursor-pointer text-lg text-white" />
             {getTotalItems() > 0 && (
               <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                 {getTotalItems()}
@@ -230,7 +343,10 @@ export default function Header() {
                       ? "text-primary-green hover:text-[#283071]"
                       : "text-gray-700 hover:text-[#283071]"
                   }`}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    closeUserMenu();
+                  }}
                 >
                   {item.label}
                 </Link>

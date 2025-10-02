@@ -164,7 +164,7 @@ export default function CategoryClient({ config }: CategoryClientProps) {
           {/* Hero Section */}
           <div className="relative h-64 bg-gradient-to-r from-gray-900 to-gray-700">
             <div className="absolute inset-0 bg-black/50"></div>
-            <div className="relative z-10 flex h-full items-center justify-center">
+            <div className="relative z-10 flex h-full items-center justify-center px-10">
               <div className="text-center text-white">
                 <h1 className="mb-4 text-2xl font-bold md:text-5xl" style={{ fontFamily: "var(--font-syne)" }}>
                   {config.title}
