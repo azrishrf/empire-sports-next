@@ -82,8 +82,8 @@ export class ToyyibPayService {
         billPriceSetting: 0, // Dynamic price (matching PHP example)
         billPayorInfo: 1, // Required
         billAmount: Math.round(paymentData.amount * 100), // Convert to sen (cents)
-        billReturnUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/payment/status`,
-        billCallbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/callback`,
+        billReturnUrl: "https://empire-sports.vercel.app/payment/status",
+        billCallbackUrl: "https://empire-sports.vercel.app/api/payment/callback",
         billExternalReferenceNo: paymentData.orderId,
         billTo: paymentData.customerName,
         billEmail: paymentData.customerEmail,
