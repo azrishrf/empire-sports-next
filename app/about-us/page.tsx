@@ -294,19 +294,19 @@ export default function AboutUsPage() {
             Join thousands of customers who trust Empire Sports for their premium gear needs
           </p>
           <div
-            className="space-y-4 md:flex md:justify-center md:space-y-0 md:space-x-4"
+            className="flex flex-col items-center justify-center space-y-4 md:flex-row md:space-y-0 md:space-x-4"
             data-aos="fade-up"
             data-aos-delay="400"
           >
             <Link
               href="/collections"
-              className="bg-dark-green inline-block rounded-lg px-8 py-3 text-lg font-medium text-black transition-colors duration-300 hover:bg-black hover:text-white"
+              className="bg-dark-green inline-block max-w-40 rounded-lg px-8 py-3 text-lg font-medium text-black transition-colors duration-300 hover:bg-black hover:text-white"
             >
               Shop Now
             </Link>
             <Link
               href="/collections/brands"
-              className="inline-block rounded-lg border-2 border-white px-8 py-3 text-lg font-medium text-white transition-colors duration-300 hover:bg-white hover:text-gray-900"
+              className="inline-block max-w-52 rounded-lg border-2 border-white px-8 py-3 text-lg font-medium text-white transition-colors duration-300 hover:bg-white hover:text-gray-900"
             >
               Explore Brands
             </Link>
