@@ -37,6 +37,8 @@ export default function ProductsGrid({
     );
   }
 
+  console.log("test filteredProducts: ", filteredProducts);
+
   if (filteredProducts.length === 0) {
     return (
       <div className="py-16 text-center">

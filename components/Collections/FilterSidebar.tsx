@@ -133,7 +133,7 @@ export default function FilterSidebar({
                         </div>
                         <span className="text-gray-700">{category.name}</span>
                       </div>
-                      <span className="text-xs text-gray-500">({getCategoryCount(category.slug)})</span>
+                      {/* <span className="text-xs text-gray-500">({getCategoryCount(category.slug)})</span> */}
                     </label>
                   ))}
                 </div>
@@ -165,7 +165,7 @@ export default function FilterSidebar({
                         </div>
                         <span className="text-gray-700">{brand}</span>
                       </div>
-                      <span className="text-xs text-gray-500">({getBrandCount(brand)})</span>
+                      {/* <span className="text-xs text-gray-500">({getBrandCount(brand)})</span> */}
                     </label>
                   ))}
                 </div>
@@ -200,7 +200,7 @@ export default function FilterSidebar({
                         </div>
                         <span className="text-gray-700">{gender.name}</span>
                       </div>
-                      <span className="text-xs text-gray-500">({getGenderCount(gender.value)})</span>
+                      {/* <span className="text-xs text-gray-500">({getGenderCount(gender.value)})</span> */}
                     </label>
                   ))}
                 </div>
@@ -230,7 +230,7 @@ export default function FilterSidebar({
                   <input
                     type="range"
                     min="0"
-                    max="1000"
+                    max="5000"
                     value={priceRange[1]}
                     onChange={(e) => onPriceRangeChange([priceRange[0], parseInt(e.target.value)])}
                     className="slider h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"

@@ -305,7 +305,7 @@ export default function AboutUsPage() {
               Shop Now
             </Link>
             <Link
-              href="/collections/brands"
+              href="/brands"
               className="inline-block max-w-52 rounded-lg border-2 border-white px-8 py-3 text-lg font-medium text-white transition-colors duration-300 hover:bg-white hover:text-gray-900"
             >
               Explore Brands

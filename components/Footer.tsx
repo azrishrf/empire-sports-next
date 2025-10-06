@@ -11,7 +11,7 @@ const categoryLinks = [
   { href: "/collections/basketball", label: "Basketball" },
 ];
 
-const accountItems = ["My Account", "Shopping Cart", , "Orders", "FAQ"];
+const accountItems = ["My Account", "Shopping Cart", , "Orders"];
 
 const socialLinks = [
   {
@@ -122,16 +122,14 @@ export default function Footer() {
                   <Link
                     href={
                       item === "My Account"
-                        ? "/account"
+                        ? "/my-account"
                         : item === "Shopping Cart"
                           ? "/cart"
                           : item === "Wishlist"
                             ? "/wishlist"
                             : item === "Orders"
                               ? "/orders"
-                              : item === "FAQ"
-                                ? "/faq"
-                                : "#"
+                              : "#"
                     }
                     className="hover:text-primary-green inline-block text-gray-300 transition-colors duration-300 hover:translate-x-1"
                   >

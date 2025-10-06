@@ -15,7 +15,7 @@ const navItems = [
   { href: "/collections/men", label: "MEN" },
   { href: "/collections/women", label: "WOMEN" },
   { href: "/collections/greatdeals", label: "GREAT DEALS" },
-  { href: "/collections/brands", label: "TOP BRANDS" },
+  { href: "/brands", label: "TOP BRANDS" },
   { href: "/about-us", label: "ABOUT US" },
 ];
 

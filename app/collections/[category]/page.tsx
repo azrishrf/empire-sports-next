@@ -4,8 +4,9 @@ import CategoryClient from "./CategoryClient";
 interface ConfigType {
   title: string;
   filters: string[];
-  genderFilter: string | null;
+  genderFilter?: string | null;
   brandFilter?: string;
+  categoryFilter?: string;
 }
 
 // Configuration for different collection types
@@ -23,17 +24,31 @@ const collectionConfig: Record<string, ConfigType> = {
   greatdeals: {
     title: "Great Deals Up to 50% OFF",
     filters: ["categories", "brands", "gender", "price"],
-    genderFilter: null,
   },
-  brands: {
-    title: "Top Brands",
-    filters: ["categories", "brands", "gender", "price"],
-    genderFilter: null,
+  running: {
+    title: "Running Collection",
+    filters: ["brands", "gender", "price"],
+    categoryFilter: "running",
   },
-  "about-us": {
-    title: "About Us",
-    filters: [],
-    genderFilter: null,
+  basketball: {
+    title: "Basketball Collection",
+    filters: ["brands", "gender", "price"],
+    categoryFilter: "basketball",
+  },
+  clothing: {
+    title: "Clothing Collection",
+    filters: ["brands", "gender", "price"],
+    categoryFilter: "clothing",
+  },
+  sneakers: {
+    title: "Sneakers Collection",
+    filters: ["brands", "gender", "price"],
+    categoryFilter: "sneakers",
+  },
+  sandals: {
+    title: "Sandals Collection",
+    filters: ["brands", "gender", "price"],
+    categoryFilter: "sandals",
   },
 };
 

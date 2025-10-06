@@ -11,7 +11,7 @@ interface BrandData {
   image: string;
 }
 
-export default function BrandsGrid() {
+export default function TopBrands() {
   const router = useRouter();
 
   useEffect(() => {
