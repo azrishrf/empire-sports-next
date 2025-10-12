@@ -1,10 +1,8 @@
 "use client";
 
+import ProductSection from "@/components/ProductSection";
 import { Product } from "@/data/products";
 import { ProductService } from "@/lib/productService";
-import AOS from "aos";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface RelatedProductsProps {
@@ -18,12 +16,6 @@ export default function RelatedProducts({ category, currentProductId, currentPro
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: "ease-out-cubic",
-    });
-
     const fetchProducts = async () => {
       try {
         // Get all products
@@ -75,83 +67,5 @@ export default function RelatedProducts({ category, currentProductId, currentPro
     fetchProducts();
   }, [category, currentProductId, currentProductBrand]);
 
-  //   if (loading) {
-  //     return (
-  //       <section className="bg-white px-4 py-16">
-  //         <div className="mx-auto max-w-7xl text-center">
-  //           <div className="bg-primary-green mb-8 inline-flex items-center rounded-full px-4 py-2 text-sm font-bold text-black">
-  //             Loading...
-  //           </div>
-  //         </div>
-  //       </section>
-  //     );
-  //   }
-
-  return (
-    <section className="bg-white px-4 py-16">
-      <div className="mx-auto max-w-7xl">
-        {/* Section Header */}
-        <div className="mb-12 text-center" data-aos="fade-up">
-          <div className="bg-primary-green inline-flex items-center rounded-full px-6 py-4 text-3xl font-bold text-black">
-            <span style={{ fontFamily: "var(--font-syne)" }}>Related Products</span>
-          </div>
-        </div>
-
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          {products.map((product, index) => (
-            <Link
-              key={product.id}
-              href={`/collections/${product.category.toLowerCase()}/${product.id}`}
-              className="group h-full"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-            >
-              <div className="flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 group-hover:-translate-y-1 hover:shadow-lg">
-                {/* Product Image */}
-                <div className="relative mb-6 overflow-hidden rounded-xl bg-gray-50">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    width={250}
-                    height={250}
-                    className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="rounded-full bg-white/90 px-4 py-2 text-sm font-semibold backdrop-blur-sm">
-                      View Details
-                    </div>
-                  </div>
-                </div>
-
-                {/* Product Info */}
-                <div className="flex flex-1 flex-col justify-between space-y-3">
-                  <h3
-                    className="line-clamp-2 font-semibold text-gray-900 transition-colors duration-300"
-                    style={{ fontFamily: "var(--font-poppins)" }}
-                  >
-                    {product.name}
-                  </h3>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>
-                      {product.price}
-                    </span>
-
-                    {product.availability === "IN STOCK" && (
-                      <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
-                        In Stock
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+  return <ProductSection title="Related Products" products={products} loading={loading} showServices={false} />;
 }
