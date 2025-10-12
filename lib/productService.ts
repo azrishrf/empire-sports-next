@@ -120,7 +120,7 @@ export class ProductService {
     try {
       // Get only confirmed orders to calculate sales data
       const ordersCollection = collection(db, "orders");
-      const confirmedOrdersQuery = query(ordersCollection, where("status", "==", "confirmed"));
+      const confirmedOrdersQuery = query(ordersCollection, where("status", "==", "success"));
       const ordersSnapshot = await getDocs(confirmedOrdersQuery);
 
       // Count sales for each product

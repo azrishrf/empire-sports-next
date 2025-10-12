@@ -85,13 +85,6 @@ export class ServerOrderService {
         ...(paymentData.notes && { notes: paymentData.notes }),
         updatedAt: new Date(),
       });
-
-      // Also update main status if payment is successful
-      if (paymentData.status === "success") {
-        await orderRef.update({
-          status: "confirmed",
-        });
-      }
     } catch (error) {
       console.error("Error updating order payment status:", error);
       throw new Error(`Failed to update order: ${error instanceof Error ? error.message : "Unknown error"}`);

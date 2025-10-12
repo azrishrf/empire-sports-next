@@ -33,7 +33,7 @@ export default function ElevateGameSection() {
   return (
     <section className="bg-gray-100 px-4 py-20">
       <div className="mx-auto max-w-7xl">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
+        <div className="grid gap-12 md:grid-cols-2 lg:items-center">
           {/* Image Section */}
           <div className="relative" data-aos="fade-right">
             <div className="relative z-10">
@@ -55,7 +55,7 @@ export default function ElevateGameSection() {
           <div className="space-y-8" data-aos="fade-left">
             <div>
               <h2
-                className="mb-6 text-4xl leading-tight font-bold text-gray-900 md:text-5xl lg:text-6xl"
+                className="mb-6 text-4xl leading-tight font-bold text-gray-900 lg:text-6xl"
                 style={{ fontFamily: "var(--font-syne)" }}
               >
                 Elevate Your

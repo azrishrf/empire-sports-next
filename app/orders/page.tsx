@@ -196,12 +196,12 @@ export default function OrdersPage() {
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <span
+                      {/* <span
                         className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${getStatusColor(order.status)}`}
                       >
                         {getStatusIcon(order.status)}
                         <span className="ml-1">{order.status.toUpperCase()}</span>
-                      </span>
+                      </span> */}
                       <span
                         className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${getStatusColor(order.paymentStatus)}`}
                       >
@@ -268,15 +268,6 @@ export default function OrdersPage() {
                           </div>
                         </div>
                       </div>
-
-                      {/* Transaction Reference */}
-                      {order.transactionId && (
-                        <div className="mt-4 rounded-lg bg-blue-50 p-3">
-                          <p className="text-sm text-blue-800">
-                            <span className="font-medium">Reference:</span> {order.transactionId}
-                          </p>
-                        </div>
-                      )}
                     </div>
                   </div>
 
