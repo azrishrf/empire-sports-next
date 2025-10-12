@@ -43,58 +43,60 @@ export default function TopTrending() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          {products.map((product, index) => (
-            <Link
-              key={product.id}
-              href={`/collections/${product.category.toLowerCase()}/${product.id}`}
-              className="group h-full"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-            >
-              <div className="flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 group-hover:-translate-y-1 hover:shadow-lg">
-                {/* Product Image */}
-                <div className="relative mb-6 overflow-hidden rounded-xl bg-gray-50">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    width={250}
-                    height={250}
-                    className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
+        <div className="scrollbar-hide overflow-x-auto md:overflow-visible">
+          <div className="flex space-x-4 pb-4 md:grid md:grid-cols-3 md:gap-6 md:space-x-0 md:pb-0 lg:grid-cols-5">
+            {products.map((product, index) => (
+              <Link
+                key={product.id}
+                href={`/collections/${product.category.toLowerCase()}/${product.id}`}
+                className="group h-full w-64 flex-shrink-0 md:w-auto"
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
+              >
+                <div className="flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 group-hover:-translate-y-1 hover:shadow-lg">
+                  {/* Product Image */}
+                  <div className="relative mb-6 overflow-hidden rounded-xl bg-gray-50">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      width={250}
+                      height={250}
+                      className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
 
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="rounded-full bg-white/90 px-4 py-2 text-sm font-semibold backdrop-blur-sm">
-                      View Details
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <div className="rounded-full bg-white/90 px-4 py-2 text-sm font-semibold backdrop-blur-sm">
+                        View Details
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Product Info */}
+                  <div className="flex flex-1 flex-col justify-between space-y-3">
+                    <h3
+                      className="line-clamp-2 font-semibold text-gray-900 transition-colors duration-300"
+                      style={{ fontFamily: "var(--font-poppins)" }}
+                    >
+                      {product.name}
+                    </h3>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>
+                        {product.price}
+                      </span>
+
+                      {product.availability === "IN STOCK" && (
+                        <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
+                          In Stock
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
-
-                {/* Product Info */}
-                <div className="flex flex-1 flex-col justify-between space-y-3">
-                  <h3
-                    className="line-clamp-2 font-semibold text-gray-900 transition-colors duration-300"
-                    style={{ fontFamily: "var(--font-poppins)" }}
-                  >
-                    {product.name}
-                  </h3>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-gray-900" style={{ fontFamily: "var(--font-syne)" }}>
-                      {product.price}
-                    </span>
-
-                    {product.availability === "IN STOCK" && (
-                      <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
-                        In Stock
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Services Section */}
